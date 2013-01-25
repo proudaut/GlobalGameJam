@@ -38,7 +38,10 @@ public class InPutManager : MonoBehaviour
 	{
 		get{ return mAnimation;}
 	}
-	
+	public Button mButtonTop;
+	public Button mButtonMiddle;
+	public Button mButtonDown;
+
 	public List<InPutManager> mInPutManagerCopy = new List<InPutManager>();
 	
 	// Use this for initialization
@@ -52,10 +55,36 @@ public class InPutManager : MonoBehaviour
 	{
 	
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+	void OnButtonClick(Button _button)
 	{
-	
+		if ( _button == mButtonTop )
+		{
+			SetFrameButton(mButtonDown,1);
+			SetFrameButton(mButtonMiddle,1);
+			SetFrameButton(mButtonTop,1);
+		}
+		if ( _button == mButtonMiddle )
+        {
+			SetFrameButton(mButtonDown,1);
+			SetFrameButton(mButtonMiddle,1);
+			SetFrameButton(mButtonTop,1);
+		}
+		if ( _button == mButtonDown )
+        {
+			SetFrameButton(mButtonDown,1);
+			SetFrameButton(mButtonMiddle,1);
+			SetFrameButton(mButtonTop,1);
+		}
 	}
+	
+	
+	void SetFrameButton(Button _Button, int _Frame)
+	{
+			_Button.mCurrentFrame = _Frame;
+			_Button.mDefaultFrame = _Frame;
+			_Button.mOverFrame = _Frame;
+			mButtonMiddle.UpdateFrame();
+	}
+	
 }
