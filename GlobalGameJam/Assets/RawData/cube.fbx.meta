@@ -42,17 +42,17 @@ ModelImporter:
     - name: jump
       firstFrame: 21
       lastFrame: 40
-      wrapMode: 2
+      wrapMode: 1
       loop: 0
     - name: slide
       firstFrame: 41
       lastFrame: 60
-      wrapMode: 2
+      wrapMode: 1
       loop: 0
     - name: attack
       firstFrame: 61
       lastFrame: 80
-      wrapMode: 2
+      wrapMode: 1
       loop: 0
   meshes:
     lODScreenPercentages: []
