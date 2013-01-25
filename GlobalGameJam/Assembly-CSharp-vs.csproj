@@ -127,8 +127,10 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITiledSprite.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\Script\Button.cs" />
      <Compile Include="Assets\Script\CharacterManager.cs" />
      <Compile Include="Assets\Script\InPutManager.cs" />
+     <Compile Include="Assets\Script\InputButton.cs" />
      <Compile Include="Assets\Script\Level.cs" />
      <Compile Include="Assets\Script\Track.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
