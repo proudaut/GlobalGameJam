@@ -7,6 +7,12 @@ public class Level : MonoBehaviour
 {
 	public int mDuration;
 	public List<Track> mTrack;
+	
+	void Play()
+	{
+	}
+	
+	
 	// Use this for initialization
 	void Start () {
 	

@@ -20,6 +20,34 @@ public class InPutManager : MonoBehaviour
 		set
 		{ 
 			mInPutStateField = value;
+			switch(mInPutStateField)
+			{
+				case InPutState.Down : 
+				{
+					SetFrameButton(mButtonDown,2);
+					SetFrameButton(mButtonMiddle,1);
+					SetFrameButton(mButtonTop,1);
+					break;
+				}
+				case InPutState.Middle : 
+				{
+					SetFrameButton(mButtonDown,1);
+					SetFrameButton(mButtonMiddle,2);
+					SetFrameButton(mButtonTop,1);
+					break;
+				}
+				case InPutState.Up : 
+				{
+					SetFrameButton(mButtonDown,1);
+					SetFrameButton(mButtonMiddle,1);
+					SetFrameButton(mButtonTop,2);
+					break;
+				}
+				
+			}
+			
+			
+			
 			foreach(InPutManager lInPutManager in mInPutManagerCopy)
 			{
 				lInPutManager.mInPutState = value;
@@ -41,7 +69,7 @@ public class InPutManager : MonoBehaviour
 	public Button mButtonTop;
 	public Button mButtonMiddle;
 	public Button mButtonDown;
-
+	public bool mIsCopy = false;
 	public List<InPutManager> mInPutManagerCopy = new List<InPutManager>();
 	
 	// Use this for initialization
@@ -58,25 +86,25 @@ public class InPutManager : MonoBehaviour
 
 	void OnButtonClick(Button _button)
 	{
-		if ( _button == mButtonTop )
+		if( !mIsCopy )
 		{
-			SetFrameButton(mButtonDown,1);
-			SetFrameButton(mButtonMiddle,1);
-			SetFrameButton(mButtonTop,1);
-		}
-		if ( _button == mButtonMiddle )
-        {
-			SetFrameButton(mButtonDown,1);
-			SetFrameButton(mButtonMiddle,1);
-			SetFrameButton(mButtonTop,1);
-		}
-		if ( _button == mButtonDown )
-        {
-			SetFrameButton(mButtonDown,1);
-			SetFrameButton(mButtonMiddle,1);
-			SetFrameButton(mButtonTop,1);
+			if ( _button == mButtonTop )
+			{
+				mInPutState = InPutState.Up;
+			}
+			else if ( _button == mButtonMiddle )
+	        {
+				mInPutState = InPutState.Middle;
+			}
+			else if ( _button == mButtonDown )
+	        {
+				mInPutState = InPutState.Down;
+			}
 		}
 	}
+	
+	
+	
 	
 	
 	void SetFrameButton(Button _Button, int _Frame)
@@ -84,7 +112,7 @@ public class InPutManager : MonoBehaviour
 			_Button.mCurrentFrame = _Frame;
 			_Button.mDefaultFrame = _Frame;
 			_Button.mOverFrame = _Frame;
-			mButtonMiddle.UpdateFrame();
+			_Button.UpdateFrame();
 	}
 	
 }

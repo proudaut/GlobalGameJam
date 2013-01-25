@@ -32,6 +32,8 @@ public class Track : MonoBehaviour
 				lInput.transform.parent = this.transform;
 				InPutManager lInPutManager = lInput.GetComponent<InPutManager>();
 				lInPutManager.mPosition = i;
+				lInput.transform.localPosition = new Vector3(lInPutManager.mPosition * 10 ,0,0);
+				
 				mInputList.Add(lInput);
 				for(int m=1 ;m<count; m++)
 				{
@@ -39,7 +41,10 @@ public class Track : MonoBehaviour
 					lInputCopy.transform.parent = this.transform;
 					InPutManager lInPutManagerCopy = lInputCopy.GetComponent<InPutManager>();
 					lInPutManagerCopy.mPosition = (mDuration*m)+i;
+					lInPutManagerCopy.mIsCopy = true;
 					lInPutManager.AddInputManagerCopy(lInPutManagerCopy);
+					
+					lInputCopy.transform.localPosition = new Vector3(lInPutManagerCopy.mPosition * 10,0,0);
 				}
 			}
 		}
