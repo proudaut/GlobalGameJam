@@ -55,7 +55,7 @@ public class Level : MonoBehaviour
 	void Stop()
 	{
 		mIsPlaying = false;
-		mCharater.transform.localPosition = new Vector3(-18,0,0);
+		mCharater.transform.localPosition = new Vector3(-1,4,0);
 		mSound.Stop();
 		foreach(Track lTrack in mTrack)
 		{
@@ -91,7 +91,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(G) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -99,7 +99,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(GL) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -108,7 +108,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(GR) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -118,7 +118,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(GD) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -126,7 +126,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(GF) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -135,7 +135,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(spi) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -143,7 +143,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(G) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -151,7 +151,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(low) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -159,7 +159,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(vc) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -167,7 +167,7 @@ public class Level : MonoBehaviour
 				{
 					GameObject lInstanceElement = Instantiate(hc) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX,lLevelElement.mY,0);
+					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*4,lLevelElement.mY*4,0);
 					break;
 				}
 				
@@ -187,7 +187,7 @@ public class Level : MonoBehaviour
 	{
 		if (mIsPlaying)
 		{
-			mCharater.transform.Translate(Vector3.right * Time.deltaTime * 3);
+			mCharater.transform.Translate(Vector3.right * Time.deltaTime * 4);
 		}
 	}
 }
