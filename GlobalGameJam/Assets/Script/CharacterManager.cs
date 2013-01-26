@@ -21,8 +21,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleJump()
     {
 		CleanSound();
-		Debug.Log("HandleJump");
-		
+
 		this.GetComponentInChildren<Animation>()["Jump"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
@@ -32,7 +31,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleSlide()
     {
 		CleanSound();
-		Debug.Log("HandleSlide");
+
 		
 		this.GetComponentInChildren<Animation>()["Slide"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Slide");
@@ -42,8 +41,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleIdleMovement()
     {
 		CleanSound();
-		Debug.Log("HandleIdle");
-		
+
 		this.GetComponentInChildren<Animation>()["Run"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Run");
 		
@@ -62,7 +60,6 @@ public class CharacterManager : MonoBehaviour
 	public void HandleAttack()
     {
 		CleanSound();
-		Debug.Log("HandleAttack");
 		
 		this.GetComponentInChildren<Animation>()["Attack"].layer = 2;
 		this.GetComponentInChildren<Animation>().Play("Attack");
@@ -74,7 +71,6 @@ public class CharacterManager : MonoBehaviour
 	public void HandleShield()
     {
 		CleanSound();
-		Debug.Log("HandleShield");
 		
 		this.GetComponentInChildren<Animation>()["Shield"].layer = 2;
 		this.GetComponentInChildren<Animation>().Play("Shield");
@@ -107,8 +103,14 @@ public class CharacterManager : MonoBehaviour
 	void OnCollisionEnter(Collision other) 
 	{
 		Debug.Log("Enter collision " + other.gameObject.name); 
-		
-		
+		if( other.gameObject.name == "spi")
+		{
+			this.transform.localPosition = new Vector3(0,  other.gameObject.transform.localPosition.y, 0);
+		}
+		if( other.gameObject.name == "mid")
+		{
+			this.transform.localPosition = new Vector3(0,  other.gameObject.transform.localPosition.y, 0);
+		}
 		
 		//this.animation.Stop("jump");
 		
