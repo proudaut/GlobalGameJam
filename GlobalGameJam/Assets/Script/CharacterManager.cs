@@ -52,7 +52,7 @@ public class CharacterManager : MonoBehaviour
 		this.GetComponentInChildren<Animation>()["Run"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Run");
 		
-		
+		if(mIdleMovementSound!= null)
 		mInstanciateSound.Add(Instantiate(mIdleMovementSound) as GameObject);
 	}
 	
@@ -60,6 +60,7 @@ public class CharacterManager : MonoBehaviour
     {
 		CleanSound();
 		mAsShield = false;
+		if(mIdleActionSound!= null)
 		mInstanciateSound.Add(Instantiate(mIdleActionSound) as GameObject);
 	}
 	
