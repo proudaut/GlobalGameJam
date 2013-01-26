@@ -58,7 +58,7 @@ public class Level : MonoBehaviour
 	public void Stop()
 	{
 		mIsPlaying = false;
-		mCharater.transform.localPosition = new Vector3(0.5f,3,0);
+		mCharater.transform.localPosition = new Vector3(0,3,0);
 		mSound.Stop();
 		foreach(Track lTrack in mTrack)
 		{
