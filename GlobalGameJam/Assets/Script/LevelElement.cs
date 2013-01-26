@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum LevelElementType
 {
-	G = 0,
+	G = 1,
 	GL,
 	GR,
 	GD,
