@@ -66,7 +66,7 @@ public class Track : MonoBehaviour
 	public void Play()
 	{
 		mIsPlaying = true;
-		mStartTime = Time.time;
+		mStartTime = Time.time -1;
 		mIndexAnimation = 0;
 	}
 	

@@ -61,6 +61,8 @@ public class CharacterManager : MonoBehaviour
 		
 		this.animation["idle"].layer = 1;
 		this.animation.Play("idle");
+		
+		
 		mInstanciateSound.Add(Instantiate(mIdleSound) as GameObject);
 	}
 		
@@ -83,6 +85,34 @@ public class CharacterManager : MonoBehaviour
 			Destroy(lGameObject);
 		}
 	}
+	
+	void OnCollisionEnter(Collision other) 
+	{
+		Debug.Log("Enter collision " + other.gameObject.name); 
+		
+		
+		
+		//this.animation.Stop("jump");
+		
+		//this.animation.Play("idle");
+		//this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y+0.2f, 0);
+    }
+	/*
+	void OnCollisionExit(Collision other) 
+	{
+       Debug.Log("Exit collision " + other.gameObject.name); 
+    }
+
+	
+	void OnTriggerEnter(Collider other) 
+	{
+		Debug.Log("Enter collision " + other.gameObject.name); 
+    }
+	void OnTriggerExit(Collider other) 
+	{
+       Debug.Log("Exit collision " + other.gameObject.name); 
+    }
+	*/
 	
 	// Use this for initialization
 	void Start ()
