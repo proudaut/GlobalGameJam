@@ -10,6 +10,7 @@ public class CharacterManager : MonoBehaviour
 	public GameObject mIdleActionSound;
 	public GameObject mSlideSound;
 	public GameObject mShieldSound;
+	public ParticleSystem mExplosion;
 	public Level mLevel;
 	
 	bool mAsShield = false;
@@ -29,6 +30,16 @@ public class CharacterManager : MonoBehaviour
 		this.GetComponentInChildren<Animation>()["Jump"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
+	}
+	
+	public void Explode()
+	{
+		mExplosion.Play();
+	}
+	
+	public void ExplodeStop()
+	{
+		mExplosion.Stop();
 	}
 	
 	
