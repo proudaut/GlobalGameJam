@@ -10,7 +10,7 @@ public class CharacterManager : MonoBehaviour
 	public GameObject mIdleActionSound;
 	public GameObject mSlideSound;
 	public GameObject mShieldSound;
-	
+	public Level mLevel;
 	
 	bool mAsShield = false;
 	bool mIsAttacking = true;
@@ -52,7 +52,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleIdleAction()
     {
 		CleanSound();
-
+		mAsShield = false;
 		mInstanciateSound.Add(Instantiate(mIdleActionSound) as GameObject);
 	}
 	
@@ -60,7 +60,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleAttack()
     {
 		CleanSound();
-		
+		mAsShield = false;
 		this.GetComponentInChildren<Animation>()["Attack"].layer = 2;
 		this.GetComponentInChildren<Animation>().Play("Attack");
 		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
@@ -71,7 +71,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleShield()
     {
 		CleanSound();
-		
+		mAsShield = true;
 		this.GetComponentInChildren<Animation>()["Shield"].layer = 2;
 		this.GetComponentInChildren<Animation>().Play("Shield");
 		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
@@ -102,15 +102,20 @@ public class CharacterManager : MonoBehaviour
 	
 	void OnCollisionEnter(Collision other) 
 	{
+		/*
 		Debug.Log("Enter collision " + other.gameObject.name); 
-		if( other.gameObject.name == "spi")
+		if( (other.gameObject.name == "spi"|| other.gameObject.name == "Sphere") && mAsShield == false)
 		{
-			this.transform.localPosition = new Vector3(0,  other.gameObject.transform.localPosition.y, 0);
+			mLevel.Stop();
+		}
+		else if( (other.gameObject.name == "spi"|| other.gameObject.name == "Sphere") && mAsShield == false)
+		{
+			other.collider.enabled = false;
 		}
 		if( other.gameObject.name == "mid")
 		{
-			this.transform.localPosition = new Vector3(0,  other.gameObject.transform.localPosition.y, 0);
-		}
+			mLevel.Stop();
+		}*/
 		
 		//this.animation.Stop("jump");
 		
