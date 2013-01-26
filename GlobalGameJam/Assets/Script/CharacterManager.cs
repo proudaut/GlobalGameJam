@@ -6,9 +6,14 @@ public class CharacterManager : MonoBehaviour
 {
 	public GameObject mJumpSound;
 	public GameObject mAttackSound;
-	public GameObject mIdleSound;
+	public GameObject mIdleMovementSound;
+	public GameObject mIdleActionSound;
 	public GameObject mSlideSound;
 	public GameObject mShieldSound;
+	
+	
+	bool mAsShield = false;
+	bool mIsAttacking = true;
 	
 	
 	public List<GameObject> mInstanciateSound = new List<GameObject>();
@@ -34,7 +39,7 @@ public class CharacterManager : MonoBehaviour
 		mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
 	}
 	
-	public void HandleIdle()
+	public void HandleIdleMovement()
     {
 		CleanSound();
 		Debug.Log("HandleIdle");
@@ -43,7 +48,14 @@ public class CharacterManager : MonoBehaviour
 		this.GetComponentInChildren<Animation>().Play("Run");
 		
 		
-		mInstanciateSound.Add(Instantiate(mIdleSound) as GameObject);
+		mInstanciateSound.Add(Instantiate(mIdleMovementSound) as GameObject);
+	}
+	
+	public void HandleIdleAction()
+    {
+		CleanSound();
+
+		mInstanciateSound.Add(Instantiate(mIdleActionSound) as GameObject);
 	}
 	
 	
@@ -52,8 +64,8 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleAttack");
 		
-		this.GetComponentInChildren<Animation>()["Attack"].layer = 2;
-		this.GetComponentInChildren<Animation>().Play("Attack");
+		this.GetComponentInChildren<Animation>()["attack"].layer = 2;
+		this.GetComponentInChildren<Animation>().Play("attack");
 		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
 	}
 	
@@ -64,8 +76,8 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleShield");
 		
-		this.GetComponentInChildren<Animation>()["Shield"].layer = 2;
-		this.GetComponentInChildren<Animation>().Play("Shield");
+		this.GetComponentInChildren<Animation>()["shield"].layer = 2;
+		this.GetComponentInChildren<Animation>().Play("shield");
 		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
 	}
 	
