@@ -91,7 +91,7 @@ public class InPutManager : MonoBehaviour
 			switch (mInPutState)
 			{
 				case InPutState.Down : mCharactereManager.HandleSlide(); break;
-				case InPutState.Up : mCharactereManager.HandleJump(); break;
+				case InPutState.Up : mCharactereManager.HandleJump();  break;
 				//case InPutState.Middle : mCharactereManager.HandleIdle();break;
 			}
 		}
