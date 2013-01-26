@@ -7,8 +7,10 @@ public class Level : MonoBehaviour
 {
 	public int mDuration;
 	public Animation mCharacterAnimation;
-	
+	public GameObject mCharater;
 	public List<Track> mTrack;
+	
+	private bool mIsPlaying = false;
 	
 	void OnButtonClick(Button _button)
 	{
@@ -20,14 +22,15 @@ public class Level : MonoBehaviour
 	IEnumerator Play()
 	{
 		yield return true;
-
+		
+		
 		foreach(Track lTrack in mTrack)
 		{
 			lTrack.GenerateAnimation();
 		}
 		
 		
-		
+		mIsPlaying = true;
 		for(int i= 0 ; i < mDuration ; i++)
 		{
 			foreach(Track lTrack in mTrack)
@@ -39,8 +42,11 @@ public class Level : MonoBehaviour
 					mCharacterAnimation.Play(lAnimationName);
 				}
 			}
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(0.66666f);
 		}
+		
+		mIsPlaying = false;
+		mCharater.transform.localPosition = new Vector3(-18,0,0);
 		
 		
 		foreach(Track lTrack in mTrack)
@@ -56,7 +62,11 @@ public class Level : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		if (mIsPlaying)
+		{
+			mCharater.transform.Translate(Vector3.right * Time.deltaTime * 3);
+		}
 	}
 }
