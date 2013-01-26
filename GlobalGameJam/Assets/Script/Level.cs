@@ -9,6 +9,8 @@ public class Level : MonoBehaviour
 {
 	public int mDuration;
 	public GameObject mCharater;
+	public CharacterManager mCharactereManager;
+	
 	public List<Track> mTrack;
 	public List<LevelElement> mLevelElements =  new List<LevelElement>();
 	public AudioSource mSound;
@@ -47,6 +49,12 @@ public class Level : MonoBehaviour
 	
 	public void Play()
 	{
+		mCharactereManager.mAnimation.Stop();
+		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
+		mCharater.transform.localPosition = new Vector3(0,3,0);
+		
+		
+		mCharactereManager.mIsDead = false;
 		mIsPlaying = true;
 		mSound.Play();
 		foreach(Track lTrack in mTrack)
@@ -57,8 +65,12 @@ public class Level : MonoBehaviour
 	
 	public void Stop()
 	{
-		mIsPlaying = false;
+		mCharactereManager.mAnimation.Stop();
+		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharater.transform.localPosition = new Vector3(0,3,0);
+		
+		mCharactereManager.mIsDead = true;
+		mIsPlaying = false;
 		mSound.Stop();
 		foreach(Track lTrack in mTrack)
 		{
@@ -226,7 +238,7 @@ public class Level : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (mIsPlaying)
+		if (mIsPlaying && !mCharactereManager.mIsDead)
 		{
 			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -2);
 		}
