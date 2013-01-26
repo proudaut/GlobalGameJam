@@ -186,9 +186,9 @@ public class Level : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		/*if (mIsPlaying)
+		if (mIsPlaying)
 		{
 			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -4);
-		}*/
+		}
 	}
 }

@@ -64,8 +64,8 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleAttack");
 		
-		this.GetComponentInChildren<Animation>()["attack"].layer = 2;
-		this.GetComponentInChildren<Animation>().Play("attack");
+		this.GetComponentInChildren<Animation>()["Attack"].layer = 2;
+		this.GetComponentInChildren<Animation>().Play("Attack");
 		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
 	}
 	
@@ -76,8 +76,8 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleShield");
 		
-		this.GetComponentInChildren<Animation>()["shield"].layer = 2;
-		this.GetComponentInChildren<Animation>().Play("shield");
+		this.GetComponentInChildren<Animation>()["Shield"].layer = 2;
+		this.GetComponentInChildren<Animation>().Play("Shield");
 		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
 	}
 	
