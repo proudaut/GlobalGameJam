@@ -18,53 +18,59 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleJump");
 		
-		this.animation["jump"].layer = 2;
-		this.animation.Play("jump");
+		this.GetComponentInChildren<Animation>()["Jump"].layer = 1;
+		this.GetComponentInChildren<Animation>().Play("Jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
 	}
 	
-	public void HandleAttack()
-    {
-		CleanSound();
-		Debug.Log("HandleAttack");
-		
-		this.animation["attack"].layer = 1;
-		this.animation.Play("attack");
-		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
-	}
 	
 	public void HandleSlide()
     {
 		CleanSound();
 		Debug.Log("HandleSlide");
 		
-		this.animation["slide"].layer = 2;
-		this.animation.Play("slide");
+		this.GetComponentInChildren<Animation>()["Slide"].layer = 1;
+		this.GetComponentInChildren<Animation>().Play("Slide");
 		mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
 	}
-	
-	public void HandleShield()
-    {
-		CleanSound();
-		Debug.Log("HandleShield");
-		
-		this.animation["shield"].layer = 1;
-		this.animation.Play("shield");
-		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
-	}
-	
 	
 	public void HandleIdle()
     {
 		CleanSound();
 		Debug.Log("HandleIdle");
 		
-		this.animation["idle"].layer = 1;
-		this.animation.Play("idle");
+		this.GetComponentInChildren<Animation>()["Run"].layer = 1;
+		this.GetComponentInChildren<Animation>().Play("Run");
 		
 		
 		mInstanciateSound.Add(Instantiate(mIdleSound) as GameObject);
 	}
+	
+	
+	public void HandleAttack()
+    {
+		CleanSound();
+		Debug.Log("HandleAttack");
+		
+		this.GetComponentInChildren<Animation>()["Attack"].layer = 2;
+		this.GetComponentInChildren<Animation>().Play("Attack");
+		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
+	}
+	
+
+	
+	public void HandleShield()
+    {
+		CleanSound();
+		Debug.Log("HandleShield");
+		
+		this.GetComponentInChildren<Animation>()["Shield"].layer = 2;
+		this.GetComponentInChildren<Animation>().Play("Shield");
+		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
+	}
+	
+	
+
 		
 	
 	
