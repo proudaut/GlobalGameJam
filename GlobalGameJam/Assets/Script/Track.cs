@@ -12,17 +12,16 @@ public enum TrackType
 public class Track : MonoBehaviour 
 {
 	public int mDuration;
-	public List<string> mAnimation;
 	public Level mLevel;
-	
+	public CharacterManager mCharactereManager;
 	public GameObject mInputPrefab;
+	public TrackType mTrackType;
 
-	public List<string> mTrackAnimation= new List<string>();
-	private List<InPutManager> mInputList = new List<InPutManager>();
 	
-	public GameObject mSound1;
-	public GameObject mSound3;
-	
+	private Dictionary<int,InPutManager> mInputList = new Dictionary<int, InPutManager>();
+	private bool mIsPlaying = false;
+	private float mStartTime =0;
+	private int mIndexAnimation = 0;
 	void Start () 
 	{
 		if(mLevel != null)
@@ -34,9 +33,13 @@ public class Track : MonoBehaviour
 				lInput.transform.parent = this.transform;
 				InPutManager lInPutManager = lInput.GetComponent<InPutManager>();
 				lInPutManager.mPosition = i;
+				lInPutManager.mCharactereManager = mCharactereManager;
+				lInPutManager.mTrackType = mTrackType;
 				lInput.transform.localPosition = new Vector3(lInPutManager.mPosition * 5 ,0,0);
 				
-				mInputList.Add(lInPutManager);
+				mInputList.Add(lInPutManager.mPosition,lInPutManager);
+				
+				//mInputList.Add(lInPutManager);
 				for(int m=1 ;m<count; m++)
 				{
 					GameObject lInputCopy = Instantiate(mInputPrefab)as GameObject;
@@ -44,50 +47,50 @@ public class Track : MonoBehaviour
 					InPutManager lInPutManagerCopy = lInputCopy.GetComponent<InPutManager>();
 					lInPutManagerCopy.mPosition = (mDuration*m)+i;
 					lInPutManagerCopy.mIsCopy = true;
+					lInPutManagerCopy.mTrackType = mTrackType;
+					lInPutManagerCopy.mCharactereManager = lInPutManager.mCharactereManager;
 					lInPutManager.AddInputManagerCopy(lInPutManagerCopy);
+					
+					
+					mInputList.Add(lInPutManagerCopy.mPosition,lInPutManagerCopy);
+					
+					
+					
 					lInputCopy.transform.localPosition = new Vector3(lInPutManagerCopy.mPosition * 5,0,0);
 				}
 			}
 		}
+	}
+	
+	
+	public void Play()
+	{
+		mIsPlaying = true;
+		mStartTime = Time.time;
+		mIndexAnimation = 0;
+	}
+	
+	
+	
+	public void Stop()
+	{
+		mIsPlaying = false;
 
 	}
 	
-	public void GenerateAnimation()
+	void Update () 
 	{
-		int count = mLevel.mDuration/mDuration;
-		for(int i=0; i<count; i++)
+		if (mIsPlaying)
 		{
-			foreach(InPutManager lInPutManager in mInputList)
+			if(Time.time - mStartTime>=0.99)
 			{
-				switch(lInPutManager.mInPutState)
+				mStartTime = Time.time;
+				if(mInputList.Count>mIndexAnimation)
 				{
-					case InPutState.Middle :
-					{
-						mTrackAnimation.Add(mAnimation[1]); break;
-					}
-					case InPutState.Down :
-					{
-						mTrackAnimation.Add(mAnimation[0]); break;
-					}
-					case InPutState.Up :
-					{
-						mTrackAnimation.Add(mAnimation[2]); break;
-					}
+					mInputList[mIndexAnimation].Play();
+					mIndexAnimation++;
 				}
 			}
 		}
-	}
-	
-	
-	public void CleanAnimation()
-	{
-		mTrackAnimation.Clear();
-	}
-	
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
 	}
 }

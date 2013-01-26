@@ -13,6 +13,9 @@ public enum InPutState
 
 public class InPutManager : MonoBehaviour 
 {
+	public TrackType mTrackType;
+	public CharacterManager mCharactereManager;
+	
 	[SerializeField]
 	private InPutState mInPutStateField = InPutState.Middle;
 	public InPutState mInPutState
@@ -66,10 +69,33 @@ public class InPutManager : MonoBehaviour
 			else if ( _button == mButtonDown )
 	        {
 				mInPutState = InPutState.Down;
-			}
+			}	
+			Play();
 		}
 	}
 	
+	
+	public void Play()
+	{
+		if(mTrackType == TrackType.Action)
+		{
+			switch (mInPutState)
+			{
+				case InPutState.Down : mCharactereManager.HandleShield(); break;
+				case InPutState.Up : mCharactereManager.HandleAttack(); break;
+				//case InPutState.Middle : mCharactereManager.HandleIdle();break;
+			}
+		}
+		else
+		{
+			switch (mInPutState)
+			{
+				case InPutState.Down : mCharactereManager.HandleSlide(); break;
+				case InPutState.Up : mCharactereManager.HandleJump(); break;
+				//case InPutState.Middle : mCharactereManager.HandleIdle();break;
+			}
+		}
+	}
 	
 	
 	void UpdateButton()
