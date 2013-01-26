@@ -18,7 +18,14 @@ public class Track : MonoBehaviour
 	public GameObject mInputPrefab;
 
 	public List<string> mTrackAnimation= new List<string>();
+	public ArrayList mTrackSound= new ArrayList();
+	
 	private List<InPutManager> mInputList = new List<InPutManager>();
+	
+	public AudioSource mSound1;
+	public AudioSource mSound2;
+	public AudioSource mSound3;
+	
 	
 	void Start () 
 	{
@@ -61,24 +68,30 @@ public class Track : MonoBehaviour
 					case InPutState.Middle :
 					{
 						mTrackAnimation.Add(mAnimation[1]); break;
+						mTrackSound.Add(mSound2);
 					}
 					case InPutState.Down :
 					{
 						mTrackAnimation.Add(mAnimation[0]); break;
+						mTrackSound.Add(mSound1);
 					}
 					case InPutState.Up :
 					{
 						mTrackAnimation.Add(mAnimation[2]); break;
+						mTrackSound.Add(mSound3);
 					}
 				}
 			}
 		}
+		Debug.Log("sound count : " + mTrackSound.Count);
+		Debug.Log("sound count : " + mTrackAnimation.Count);
 	}
 	
 	
 	public void CleanAnimation()
 	{
 		mTrackAnimation.Clear();
+		mTrackSound.Clear();
 	}
 	
 	

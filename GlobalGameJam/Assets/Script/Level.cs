@@ -9,7 +9,7 @@ public class Level : MonoBehaviour
 	public Animation mCharacterAnimation;
 	public GameObject mCharater;
 	public List<Track> mTrack;
-	
+	public AudioSource mSound;
 	private bool mIsPlaying = false;
 	
 	void OnButtonClick(Button _button)
@@ -31,23 +31,52 @@ public class Level : MonoBehaviour
 		
 		
 		mIsPlaying = true;
+		mSound.Play();
+		
+		
 		for(int i= 0 ; i < mDuration ; i++)
 		{
 			foreach(Track lTrack in mTrack)
 			{
 				string lAnimationName = lTrack.mTrackAnimation[i];
+				
+				if( lAnimationName == "jump")
+				{
+					lTrack.mSound1.Play();
+				}
+				else if( lAnimationName == "slide")
+				{
+					lTrack.mSound3.Play();
+				}
+				if( lAnimationName == "shield")
+				{
+					lTrack.mSound1.Play();
+				}
+				else if( lAnimationName == "attack")
+				{
+					lTrack.mSound3.Play();
+				}
+				
+				
+				
+				//lTrack.mSound1.Play();
+				
+				//AudioSource lAudioSource = lTrack.mTrackSound[i];
+				//lAudioSource.Play();
+				
 				if(lAnimationName.Length>0)
 				{
 					mCharacterAnimation[lAnimationName].layer = mTrack.IndexOf(lTrack);
 					mCharacterAnimation.Play(lAnimationName);
+					
 				}
 			}
-			yield return new WaitForSeconds(0.66666f);
+			yield return new WaitForSeconds(0.653f);
 		}
 		
 		mIsPlaying = false;
 		mCharater.transform.localPosition = new Vector3(-18,0,0);
-		
+		mSound.Stop();
 		
 		foreach(Track lTrack in mTrack)
 		{
