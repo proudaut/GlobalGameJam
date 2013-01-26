@@ -89,7 +89,7 @@ public class CharacterManager : MonoBehaviour
 		foreach(GameObject lGameObject in mInstanciateSound)
 		{
 			AudioSource lAudioSource = lGameObject.GetComponent<AudioSource>();
-			if(!lAudioSource.isPlaying)
+			if(lAudioSource!= null && !lAudioSource.isPlaying)
 			{
 				lRemoveList.Add(lGameObject);
 			}
@@ -103,6 +103,7 @@ public class CharacterManager : MonoBehaviour
 	
 	void OnCollisionEnter(Collision other) 
 	{
+		Debug.Log(other.gameObject.name);
 		//if( mAscollade == false) 
 		{
 			if( other.gameObject.name == "spi(Clone)" && mAsShield == false)
