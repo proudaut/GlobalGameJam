@@ -18,7 +18,7 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleJump");
 		
-		this.animation["jump"].layer = 1;
+		this.animation["jump"].layer = 2;
 		this.animation.Play("jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
 	}
@@ -28,7 +28,7 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleAttack");
 		
-		this.animation["attack"].layer = 3;
+		this.animation["attack"].layer = 1;
 		this.animation.Play("attack");
 		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
 	}
@@ -38,7 +38,7 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleSlide");
 		
-		this.animation["slide"].layer = 1;
+		this.animation["slide"].layer = 2;
 		this.animation.Play("slide");
 		mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
 	}
@@ -48,7 +48,7 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		Debug.Log("HandleShield");
 		
-		this.animation["shield"].layer = 2;
+		this.animation["shield"].layer = 1;
 		this.animation.Play("shield");
 		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
 	}
