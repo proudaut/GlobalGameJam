@@ -129,7 +129,7 @@ public class CharacterManager : MonoBehaviour
 			{
 				mLevel.Stop();
 			}
-			if( other.gameObject.name == "mid(Clone)")
+			if( other.gameObject.name == "mid(Clone)" || other.gameObject.name == "Ground(Clone)" || other.gameObject.name == "ground(Clone)"|| other.gameObject.name == "GF(Clone)")
 			{
 				mLevel.Stop();
 			}
@@ -164,6 +164,12 @@ public class CharacterManager : MonoBehaviour
 		
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
+			
+			if( other.gameObject.name == "GL(Clone)" || other.gameObject.name == "Ground_L(Clone)" ||  other.gameObject.name == "Ground_Hole(Clone)")
+			{
+				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y+1.2f, 0);
+			}
+			
 		}
 
     }
