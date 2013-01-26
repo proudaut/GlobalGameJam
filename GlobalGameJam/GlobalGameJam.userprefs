@@ -1,17 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Level.cs">
-    <Files>
-      <File FileName="Assets/Script/Track.cs" Line="11" Column="19" />
-      <File FileName="Assets/Script/Level.cs" Line="8" Column="2" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Documents/Projects/GIT/tekken-unity3d-client/Assets/Scripts/Game/GameCard.cs">
-    <Files>
-      <File FileName="../../Documents/Projects/GIT/tekken-unity3d-client/Assets/Scripts/Game/GameCard.cs" Line="81" Column="30" />
->>>>>>> patern editor
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

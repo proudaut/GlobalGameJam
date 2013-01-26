@@ -20,34 +20,7 @@ public class InPutManager : MonoBehaviour
 		set
 		{ 
 			mInPutStateField = value;
-			switch(mInPutStateField)
-			{
-				case InPutState.Down : 
-				{
-					SetFrameButton(mButtonDown,2);
-					SetFrameButton(mButtonMiddle,1);
-					SetFrameButton(mButtonTop,1);
-					break;
-				}
-				case InPutState.Middle : 
-				{
-					SetFrameButton(mButtonDown,1);
-					SetFrameButton(mButtonMiddle,2);
-					SetFrameButton(mButtonTop,1);
-					break;
-				}
-				case InPutState.Up : 
-				{
-					SetFrameButton(mButtonDown,1);
-					SetFrameButton(mButtonMiddle,1);
-					SetFrameButton(mButtonTop,2);
-					break;
-				}
-				
-			}
-			
-			
-			
+			UpdateButton();
 			foreach(InPutManager lInPutManager in mInPutManagerCopy)
 			{
 				lInPutManager.mInPutState = value;
@@ -58,14 +31,8 @@ public class InPutManager : MonoBehaviour
 			return mInPutStateField;
 		}
 	}
-	
-	
-	
+
 	public int mPosition=0;
-	public Animation mAnimation
-	{
-		get{ return mAnimation;}
-	}
 	public Button mButtonTop;
 	public Button mButtonMiddle;
 	public Button mButtonDown;
@@ -81,7 +48,7 @@ public class InPutManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
+		UpdateButton();
 	}
 
 	void OnButtonClick(Button _button)
@@ -104,6 +71,43 @@ public class InPutManager : MonoBehaviour
 	}
 	
 	
+	
+	void UpdateButton()
+	{
+		int lEnable = 2;
+		int lDisable = 1;
+		if(mIsCopy)
+		{
+			lEnable = 4;
+			lDisable = 3;
+		}
+		
+		switch(mInPutStateField)
+		{
+			case InPutState.Down : 
+			{
+				SetFrameButton(mButtonDown,lEnable);
+				SetFrameButton(mButtonMiddle,lDisable);
+				SetFrameButton(mButtonTop,lDisable);
+				break;
+			}
+			case InPutState.Middle : 
+			{
+				SetFrameButton(mButtonDown,lDisable);
+				SetFrameButton(mButtonMiddle,lEnable);
+				SetFrameButton(mButtonTop,lDisable);
+				break;
+			}
+			case InPutState.Up : 
+			{
+				SetFrameButton(mButtonDown,lDisable);
+				SetFrameButton(mButtonMiddle,lDisable);
+				SetFrameButton(mButtonTop,lEnable);
+				break;
+			}
+			
+		}
+	}
 	
 	
 	

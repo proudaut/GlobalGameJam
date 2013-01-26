@@ -37,7 +37,7 @@ ModelImporter:
     - name: idle
       firstFrame: 1
       lastFrame: 20
-      wrapMode: 2
+      wrapMode: 1
       loop: 0
     - name: jump
       firstFrame: 21

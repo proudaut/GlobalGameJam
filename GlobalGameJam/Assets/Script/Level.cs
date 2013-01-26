@@ -6,10 +6,47 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
 	public int mDuration;
+	public Animation mCharacterAnimation;
+	
 	public List<Track> mTrack;
 	
-	void Play()
+	void OnButtonClick(Button _button)
 	{
+		//Debug.Log("PLAY JUMP");
+		
+		StartCoroutine(Play());
+	}
+	
+	IEnumerator Play()
+	{
+		yield return true;
+
+		foreach(Track lTrack in mTrack)
+		{
+			lTrack.GenerateAnimation();
+		}
+		
+		
+		
+		for(int i= 0 ; i < mDuration ; i++)
+		{
+			foreach(Track lTrack in mTrack)
+			{
+				string lAnimationName = lTrack.mTrackAnimation[i];
+				if(lAnimationName.Length>0)
+				{
+					mCharacterAnimation[lAnimationName].layer = mTrack.IndexOf(lTrack);
+					mCharacterAnimation.Play(lAnimationName);
+				}
+			}
+			yield return new WaitForSeconds(1);
+		}
+		
+		
+		foreach(Track lTrack in mTrack)
+		{
+			lTrack.CleanAnimation();
+		}
 	}
 	
 	
