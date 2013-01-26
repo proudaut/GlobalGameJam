@@ -12,11 +12,17 @@ public class CharacterManager : MonoBehaviour
 	public GameObject mShieldSound;
 	public ParticleSystem mExplosion;
 	public Level mLevel;
+	public Animation mAnimation;
+	public bool mIsDead;
+	
 	
 	bool mAsShield = false;
 	bool mIsGlissing = true;
 	bool mIsAttacking = true;
 	bool mAscollade = false;
+
+
+	
 	
 	public List<GameObject> mInstanciateSound = new List<GameObject>();
 	
@@ -26,9 +32,8 @@ public class CharacterManager : MonoBehaviour
 		CleanSound();
 		mIsGlissing = false;
 		
-		this.GetComponentInChildren<Animation>()["Jump"].speed = 1;
-		this.GetComponentInChildren<Animation>()["Jump"].layer = 1;
-		this.GetComponentInChildren<Animation>().Play("Jump");
+		mAnimation["Jump"].layer = 1;
+		mAnimation.Play("Jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
 	}
 	
@@ -45,55 +50,68 @@ public class CharacterManager : MonoBehaviour
 	
 	public void HandleSlide()
     {
-		CleanSound();
-		
-		mIsGlissing = true;
-		Debug.Log("HandleSlide");
-		this.GetComponentInChildren<Animation>()["Slide"].layer = 1;
-		this.GetComponentInChildren<Animation>().Play("Slide");
-		mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
+		if(!mIsDead)
+		{
+			CleanSound();
+			mIsGlissing = true;
+	
+			mAnimation["Slide"].layer = 1;
+			mAnimation.Play("Slide");
+			mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
+		}
 	}
 	
 	public void HandleIdleMovement()
     {
-		CleanSound();
-		
-		mIsGlissing = false;
-	
-		this.GetComponentInChildren<Animation>()["Run"].layer = 1;
-		this.GetComponentInChildren<Animation>().Play("Run");
-		
-		if(mIdleMovementSound!= null)
-		mInstanciateSound.Add(Instantiate(mIdleMovementSound) as GameObject);
+		if(!mIsDead)
+		{
+			CleanSound();
+			
+			mIsGlissing = false;
+			mAnimation["Run"].layer = 1;
+			mAnimation.Play("Run");
+			
+			if(mIdleMovementSound!= null)
+			mInstanciateSound.Add(Instantiate(mIdleMovementSound) as GameObject);
+		}
 	}
 	
 	public void HandleIdleAction()
     {
-		CleanSound();
-		mAsShield = false;
-		if(mIdleActionSound!= null)
-		mInstanciateSound.Add(Instantiate(mIdleActionSound) as GameObject);
+		if(!mIsDead)
+		{
+			CleanSound();
+			mAsShield = false;
+			if(mIdleActionSound!= null)
+			mInstanciateSound.Add(Instantiate(mIdleActionSound) as GameObject);
+		}
 	}
 	
 	
 	public void HandleAttack()
     {
-		CleanSound();
-		mAsShield = false;
-		this.GetComponentInChildren<Animation>()["Attack"].layer = 2;
-		this.GetComponentInChildren<Animation>().Play("Attack");
-		mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
+		if(!mIsDead)
+		{
+			CleanSound();
+			mAsShield = false;
+			mAnimation["Attack"].layer = 2;
+			mAnimation.Play("Attack");
+			mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
+		}
 	}
 	
 
 	
 	public void HandleShield()
     {
-		CleanSound();
-		mAsShield = true;
-		this.GetComponentInChildren<Animation>()["Shield"].layer = 2;
-		this.GetComponentInChildren<Animation>().Play("Shield");
-		mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
+		if(!mIsDead)
+		{
+			CleanSound();
+			mAsShield = true;
+			mAnimation["Shield"].layer = 2;
+			mAnimation.Play("Shield");
+			mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
+		}
 	}
 	
 	
@@ -120,6 +138,17 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 	
+	IEnumerator Die()
+	{
+		mIsDead = true;
+		mAnimation.Stop();
+		yield return new WaitForSeconds(0.1f);
+		mAnimation.Play("Die");
+		yield return new WaitForSeconds(1);
+		mLevel.Stop();
+	}
+	
+	
 	void OnCollisionEnter(Collision other) 
 	{
 		Debug.Log(other.gameObject.name);
@@ -127,41 +156,34 @@ public class CharacterManager : MonoBehaviour
 		{
 			if( other.gameObject.name == "spi(Clone)" && mAsShield == false)
 			{
-				mLevel.Stop();
+				StartCoroutine(Die());
 			}
 			if( other.gameObject.name == "mid(Clone)" || other.gameObject.name == "Ground(Clone)" || other.gameObject.name == "ground(Clone)"|| other.gameObject.name == "GF(Clone)")
 			{
-				mLevel.Stop();
+				StartCoroutine(Die());
 			}
 			
 			if( other.gameObject.name == "low(Clone)" &&  mIsGlissing  == true)
 			{
-				mLevel.Stop();
+				StartCoroutine(Die());
 			}
 			
 			if( other.gameObject.name == "G(Clone)")
 			{
-				float lTime = this.GetComponentInChildren<Animation>()["Jump"].time;
-				this.GetComponentInChildren<Animation>().Stop("Jump");
-				this.GetComponentInChildren<Animation>().gameObject.SampleAnimation(this.GetComponentInChildren<Animation>()["Run"].clip,lTime);
-				this.GetComponentInChildren<Animation>().Play("Run");
+				float lTime = mAnimation["Jump"].time;
+				mAnimation.Stop("Jump");
+				mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,lTime);
+				mAnimation.Play("Run");
 			}
 			
 			if( other.gameObject.name == "GR(Clone)")
 			{
 				//mAscollade = true;
-				float lTime = this.GetComponentInChildren<Animation>()["Jump"].time;
-				this.GetComponentInChildren<Animation>().Stop("Jump");
+				float lTime = mAnimation["Jump"].time;
+				mAnimation.Stop("Jump");
+				mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,lTime);
+				mAnimation.Play("Run");
 				
-				
-				this.GetComponentInChildren<Animation>().gameObject.SampleAnimation(this.GetComponentInChildren<Animation>()["Run"].clip,lTime);
-				
-		
-				//this.GetComponentInChildren<Animation>()["Run"].time = lTime;
-				this.GetComponentInChildren<Animation>().Play("Run");
-				//this.GetComponentInChildren<Animation>()["Run"].time = lTime;
-
-		
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
 			
@@ -184,9 +206,5 @@ public class CharacterManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if(this.GetComponentInChildren<Animation>()["Jump"].time>0.8)
-		{
-			this.GetComponentInChildren<Animation>()["Jump"].speed = 1;
-		}
 	}
 }
