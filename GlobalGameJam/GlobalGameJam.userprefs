@@ -1,6 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Documents/Projects/GIT/tekken-unity3d-client/Assets/Scripts/Game/GameEngine.cs">
+    <Files>
+      <File FileName="../../Documents/Projects/GIT/tekken-unity3d-client/Assets/Scripts/Game/GameEngine.cs" Line="1537" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
