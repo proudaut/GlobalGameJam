@@ -82,7 +82,7 @@ public class Track : MonoBehaviour
 	{
 		if (mIsPlaying)
 		{
-			if(Time.time - mStartTime>=0.999)
+			if(Time.time - mStartTime>0.99999)
 			{
 				mStartTime = Time.time;
 				if(mInputList.Count>mIndexAnimation)

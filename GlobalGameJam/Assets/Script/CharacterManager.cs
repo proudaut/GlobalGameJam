@@ -141,10 +141,10 @@ public class CharacterManager : MonoBehaviour
 	IEnumerator Die()
 	{
 		mIsDead = true;
+		yield return true;
 		mAnimation.Stop();
-		yield return new WaitForSeconds(0.1f);
 		mAnimation.Play("Die");
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		mLevel.Stop();
 	}
 	
