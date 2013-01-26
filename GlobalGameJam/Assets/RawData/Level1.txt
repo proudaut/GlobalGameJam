@@ -1,0 +1,11 @@
+[{"x":0, "y":0, "ElementType":1},{"x":1, "y":0, "ElementType":1},{"x":1, "y":0, "ElementType":2},]
+
+
+
+
+{"x":0, "y":0, "ElementType":1}
+{"x":0, "y":0, "ElementType":2}
+{"x":0, "y":0, "ElementType":3}
+{"x":0, "y":0, "ElementType":4}
+{"x":0, "y":0, "ElementType":5}
+{"x":0, "y":0, "ElementType":6}
