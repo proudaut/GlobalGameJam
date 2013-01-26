@@ -13,6 +13,7 @@ public class CharacterManager : MonoBehaviour
 	public Level mLevel;
 	
 	bool mAsShield = false;
+	bool mIsGlissing = true;
 	bool mIsAttacking = true;
 	bool mAscollade = false;
 	
@@ -22,6 +23,8 @@ public class CharacterManager : MonoBehaviour
     {
 		Debug.Log("HandleJump");
 		CleanSound();
+		mIsGlissing = false;
+		
 		this.GetComponentInChildren<Animation>()["Jump"].speed = 1;
 		this.GetComponentInChildren<Animation>()["Jump"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Jump");
@@ -32,6 +35,8 @@ public class CharacterManager : MonoBehaviour
 	public void HandleSlide()
     {
 		CleanSound();
+		
+		mIsGlissing = true;
 		Debug.Log("HandleSlide");
 		this.GetComponentInChildren<Animation>()["Slide"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Slide");
@@ -41,7 +46,9 @@ public class CharacterManager : MonoBehaviour
 	public void HandleIdleMovement()
     {
 		CleanSound();
-		Debug.Log("HandleIdleMovement");
+		
+		mIsGlissing = false;
+	
 		this.GetComponentInChildren<Animation>()["Run"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Run");
 		
@@ -113,6 +120,19 @@ public class CharacterManager : MonoBehaviour
 			if( other.gameObject.name == "mid(Clone)")
 			{
 				mLevel.Stop();
+			}
+			
+			if( other.gameObject.name == "low(Clone)" &&  mIsGlissing  == true)
+			{
+				mLevel.Stop();
+			}
+			
+			if( other.gameObject.name == "G(Clone)")
+			{
+				float lTime = this.GetComponentInChildren<Animation>()["Jump"].time;
+				this.GetComponentInChildren<Animation>().Stop("Jump");
+				this.GetComponentInChildren<Animation>().gameObject.SampleAnimation(this.GetComponentInChildren<Animation>()["Run"].clip,lTime);
+				this.GetComponentInChildren<Animation>().Play("Run");
 			}
 			
 			if( other.gameObject.name == "GR(Clone)")
