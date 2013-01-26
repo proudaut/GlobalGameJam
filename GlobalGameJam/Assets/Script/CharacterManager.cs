@@ -14,14 +14,15 @@ public class CharacterManager : MonoBehaviour
 	
 	bool mAsShield = false;
 	bool mIsAttacking = true;
-	
+	bool mAscollade = false;
 	
 	public List<GameObject> mInstanciateSound = new List<GameObject>();
 	
 	public void HandleJump()
     {
+		Debug.Log("HandleJump");
 		CleanSound();
-
+		this.GetComponentInChildren<Animation>()["Jump"].speed = 1;
 		this.GetComponentInChildren<Animation>()["Jump"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
@@ -31,8 +32,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleSlide()
     {
 		CleanSound();
-
-		
+		Debug.Log("HandleSlide");
 		this.GetComponentInChildren<Animation>()["Slide"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Slide");
 		mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
@@ -41,7 +41,7 @@ public class CharacterManager : MonoBehaviour
 	public void HandleIdleMovement()
     {
 		CleanSound();
-
+		Debug.Log("HandleIdleMovement");
 		this.GetComponentInChildren<Animation>()["Run"].layer = 1;
 		this.GetComponentInChildren<Animation>().Play("Run");
 		
@@ -84,6 +84,7 @@ public class CharacterManager : MonoBehaviour
 	
 	private void CleanSound()
 	{
+		mAscollade = false;
 		List<GameObject> lRemoveList = new List<GameObject>();
 		foreach(GameObject lGameObject in mInstanciateSound)
 		{
@@ -102,42 +103,38 @@ public class CharacterManager : MonoBehaviour
 	
 	void OnCollisionEnter(Collision other) 
 	{
-		/*
-		Debug.Log("Enter collision " + other.gameObject.name); 
-		if( (other.gameObject.name == "spi"|| other.gameObject.name == "Sphere") && mAsShield == false)
+		//if( mAscollade == false) 
 		{
-			mLevel.Stop();
-		}
-		else if( (other.gameObject.name == "spi"|| other.gameObject.name == "Sphere") && mAsShield == false)
-		{
-			other.collider.enabled = false;
-		}
-		if( other.gameObject.name == "mid")
-		{
-			mLevel.Stop();
-		}*/
+			if( other.gameObject.name == "spi(Clone)" && mAsShield == false)
+			{
+				mLevel.Stop();
+			}
+			if( other.gameObject.name == "mid(Clone)")
+			{
+				mLevel.Stop();
+			}
+			
+			if( other.gameObject.name == "GR(Clone)")
+			{
+				//mAscollade = true;
+				float lTime = this.GetComponentInChildren<Animation>()["Jump"].time;
+				this.GetComponentInChildren<Animation>().Stop("Jump");
+				
+				
+				this.GetComponentInChildren<Animation>().gameObject.SampleAnimation(this.GetComponentInChildren<Animation>()["Run"].clip,lTime);
+				
 		
-		//this.animation.Stop("jump");
+				//this.GetComponentInChildren<Animation>()["Run"].time = lTime;
+				this.GetComponentInChildren<Animation>().Play("Run");
+				//this.GetComponentInChildren<Animation>()["Run"].time = lTime;
+
 		
-		//this.animation.Play("idle");
-		//this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y+0.2f, 0);
-    }
-	/*
-	void OnCollisionExit(Collision other) 
-	{
-       Debug.Log("Exit collision " + other.gameObject.name); 
+				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
+			}
+		}
+
     }
 
-	
-	void OnTriggerEnter(Collider other) 
-	{
-		Debug.Log("Enter collision " + other.gameObject.name); 
-    }
-	void OnTriggerExit(Collider other) 
-	{
-       Debug.Log("Exit collision " + other.gameObject.name); 
-    }
-	*/
 	
 	// Use this for initialization
 	void Start ()
@@ -148,6 +145,9 @@ public class CharacterManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
+		if(this.GetComponentInChildren<Animation>()["Jump"].time>0.8)
+		{
+			this.GetComponentInChildren<Animation>()["Jump"].speed = 1;
+		}
 	}
 }
