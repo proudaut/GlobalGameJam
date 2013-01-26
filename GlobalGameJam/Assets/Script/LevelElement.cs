@@ -6,7 +6,6 @@ public enum LevelElementType
 	G = 1,
 	GR,
 	GL,
-
 	GD,
 	GF,
 	spi,

@@ -182,7 +182,7 @@ public class Level : MonoBehaviour
 				
 				case LevelElementType.mid : 
 				{
-					GameObject lInstanceElement = Instantiate(G) as GameObject;
+					GameObject lInstanceElement = Instantiate(mid) as GameObject;
 					lInstanceElement.transform.parent = this.transform;
 					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
 					break;
