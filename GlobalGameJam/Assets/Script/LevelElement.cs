@@ -4,8 +4,9 @@ using System.Collections;
 public enum LevelElementType
 {
 	G = 1,
-	GL,
 	GR,
+	GL,
+
 	GD,
 	GF,
 	spi,

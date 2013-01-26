@@ -83,7 +83,7 @@ public class InPutManager : MonoBehaviour
 			{
 				case InPutState.Down : mCharactereManager.HandleShield(); break;
 				case InPutState.Up : mCharactereManager.HandleAttack(); break;
-				//case InPutState.Middle : mCharactereManager.HandleIdle();break;
+				case InPutState.Middle : mCharactereManager.HandleIdleAction();break;
 			}
 		}
 		else
@@ -92,7 +92,7 @@ public class InPutManager : MonoBehaviour
 			{
 				case InPutState.Down : mCharactereManager.HandleSlide(); break;
 				case InPutState.Up : mCharactereManager.HandleJump();  break;
-				case InPutState.Middle : mCharactereManager.HandleIdle();break;
+				case InPutState.Middle : mCharactereManager.HandleIdleMovement();break;
 			}
 		}
 	}
