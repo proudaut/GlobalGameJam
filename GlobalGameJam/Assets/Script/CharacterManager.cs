@@ -110,7 +110,7 @@ public class CharacterManager : MonoBehaviour
 	}
 	
 	void OnCollisionEnter(Collision other) 
-	{/*
+	{
 		Debug.Log(other.gameObject.name);
 		//if( mAscollade == false) 
 		{
@@ -153,7 +153,7 @@ public class CharacterManager : MonoBehaviour
 		
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
-		}*/
+		}
 
     }
 
