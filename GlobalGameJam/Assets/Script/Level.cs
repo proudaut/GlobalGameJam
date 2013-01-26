@@ -42,19 +42,23 @@ public class Level : MonoBehaviour
 				
 				if( lAnimationName == "jump")
 				{
-					lTrack.mSound1.Play();
+					GameObject lSound = Instantiate(lTrack.mSound1) as GameObject;
+					//((AudioSource)lSound.GetComponentInChildren<AudioSource>()).Play();
 				}
 				else if( lAnimationName == "slide")
 				{
-					lTrack.mSound3.Play();
+					GameObject lSound = Instantiate(lTrack.mSound3) as GameObject;
+					//((AudioSource)lSound.GetComponentInChildren<AudioSource>()).Play();
 				}
 				if( lAnimationName == "shield")
 				{
-					lTrack.mSound1.Play();
+					GameObject lSound = Instantiate(lTrack.mSound1) as GameObject;
+					//((AudioSource)lSound.GetComponentInChildren<AudioSource>()).Play();
 				}
 				else if( lAnimationName == "attack")
 				{
-					lTrack.mSound3.Play();
+					GameObject lSound = Instantiate(lTrack.mSound3) as GameObject;
+					//((AudioSource)lSound.GetComponentInChildren<AudioSource>()).Play();
 				}
 				
 				
@@ -71,7 +75,7 @@ public class Level : MonoBehaviour
 					
 				}
 			}
-			yield return new WaitForSeconds(0.653f);
+			yield return new WaitForSeconds(0.99f);
 		}
 		
 		mIsPlaying = false;
