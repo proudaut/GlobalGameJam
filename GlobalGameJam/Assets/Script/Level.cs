@@ -45,7 +45,7 @@ public class Level : MonoBehaviour
 		}
 	}
 	
-	void Play()
+	public void Play()
 	{
 		mIsPlaying = true;
 		mSound.Play();
@@ -55,10 +55,10 @@ public class Level : MonoBehaviour
 		}	
 	}
 	
-	void Stop()
+	public void Stop()
 	{
 		mIsPlaying = false;
-		mCharater.transform.localPosition = new Vector3(-1,4,0);
+		mCharater.transform.localPosition = new Vector3(0.5f,3,0);
 		mSound.Stop();
 		foreach(Track lTrack in mTrack)
 		{
@@ -228,7 +228,7 @@ public class Level : MonoBehaviour
 	{
 		if (mIsPlaying)
 		{
-			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -4);
+			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -2);
 		}
 	}
 }
