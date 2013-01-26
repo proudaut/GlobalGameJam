@@ -11,9 +11,9 @@ FBXHeaderExtension:  {
 		Year: 2013
 		Month: 01
 		Day: 26
-		Hour: 17
-		Minute: 21
-		Second: 37
+		Hour: 18
+		Minute: 48
+		Second: 43
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-01-26 17:21:37:000"
+CreationTime: "2013-01-26 18:48:43:000"
 Creator: "Blender version 2.63 (sub 0)"
 
 ; Object definitions
@@ -57,7 +57,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Model: "Model::Ground", "Mesh" {
+	Model: "Model::Ground_Full", "Mesh" {
 		Version: 232
 		Properties60:  {
 			Property: "QuaternionInterpolate", "bool", "",0
@@ -136,8 +136,8 @@ Objects:  {
 		MultiTake: 1
 		Shading: Y
 		Culling: "CullingOff"
-		Vertices: 2.000000,-0.100000,-0.250000,0.000000,-0.100000,-0.250000,2.000000,-0.100000,0.000000,0.000000,-0.100000,0.000000,2.000000,0.100000,0.000000,0.000000,0.100000,0.000000,2.000000,0.100000,0.250000
-		,0.000000,0.100000,0.250000,2.000000,-0.100000,-2.000000,0.000000,-0.100000,-2.000000
+		Vertices: 2.000000,-0.100000,1.750000,0.000000,-0.100000,1.750000,2.000000,-0.100000,2.000000,0.000000,-0.100000,2.000000,2.000000,0.100000,2.000000,0.000000,0.100000,2.000000,2.000000,0.100000,2.250000
+		,0.000000,0.100000,2.250000,2.000000,-0.100000,0.000000,0.000000,-0.100000,0.000000
 		PolygonVertexIndex: 1,0,2,-4,6,7,5,-5,0,1,9,-9
 		Edges: 
 		GeometryVersion: 124
@@ -287,7 +287,7 @@ Objects:  {
 		}
 		NbPoseNodes: 1
 		PoseNode:  {
-			Node: "Model::Ground"
+			Node: "Model::Ground_Full"
 			Matrix: 1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
 		}
 	}
@@ -309,7 +309,7 @@ Objects:  {
 ;------------------------------------------------------------------
 
 Relations:  {
-	Model: "Model::Ground", "Mesh" {
+	Model: "Model::Ground_Full", "Mesh" {
 	}
 	Model: "Model::Producer Perspective", "Camera" {
 	}
@@ -339,9 +339,9 @@ Relations:  {
 ;------------------------------------------------------------------
 
 Connections:  {
-	Connect: "OO", "Model::Ground", "Model::Scene"
-	Connect: "OO", "Material::ground__block_png", "Model::Ground"
-	Connect: "OO", "Texture::block_png", "Model::Ground"
+	Connect: "OO", "Model::Ground_Full", "Model::Scene"
+	Connect: "OO", "Material::ground__block_png", "Model::Ground_Full"
+	Connect: "OO", "Texture::block_png", "Model::Ground_Full"
 	Connect: "OO", "Video::block_png", "Texture::block_png"
 }
 ;Takes and animation section

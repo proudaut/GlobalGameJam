@@ -3,6 +3,7 @@ guid: ecfeaf7c42616fa46b8e9446b5e8e8a3
 ModelImporter:
   fileIDToRecycleName:
     4300000: Ground
+    4300002: Ground_Full
   serializedVersion: 10
   materials:
     importMaterials: 0
