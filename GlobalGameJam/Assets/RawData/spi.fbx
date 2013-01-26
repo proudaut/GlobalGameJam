@@ -12,8 +12,8 @@ FBXHeaderExtension:  {
 		Month: 01
 		Day: 26
 		Hour: 20
-		Minute: 06
-		Second: 32
+		Minute: 50
+		Second: 23
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-01-26 20:06:32:000"
+CreationTime: "2013-01-26 20:50:23:000"
 Creator: "Blender version 2.63 (sub 0)"
 
 ; Object definitions
@@ -130,7 +130,7 @@ Objects:  {
 		MultiTake: 1
 		Shading: Y
 		Culling: "CullingOff"
-		Vertices: 1.800000,-0.000000,0.200000,0.200000,-0.000000,0.200000,1.800000,0.000000,1.800000,0.200000,0.000000,1.800000
+		Vertices: 1.000000,-0.000000,-1.000000,-1.000000,-0.000000,-1.000000,1.000000,0.000000,1.000000,-1.000000,0.000000,1.000000
 		PolygonVertexIndex: 1,0,2,-4
 		Edges: 
 		GeometryVersion: 124
@@ -304,12 +304,12 @@ Version5:  {
 		FogColor: 0.1,0.1,0.1,1
 	}
 	Settings:  {
-		FrameRate: "30"
+		FrameRate: "24"
 		TimeFormat: 1
 		SnapOnFrames: 0
 		ReferenceTimeIndex: -1
 		TimeLineStartTime: 0
-		TimeLineStopTime: 44646619400
+		TimeLineStopTime: 479181389250
 	}
 	RendererSetting:  {
 		DefaultCamera: "Producer Perspective"
