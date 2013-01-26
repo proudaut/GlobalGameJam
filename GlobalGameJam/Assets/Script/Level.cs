@@ -8,7 +8,6 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
 	public int mDuration;
-	public Animation mCharacterAnimation;
 	public GameObject mCharater;
 	public List<Track> mTrack;
 	public List<LevelElement> mLevelElements =  new List<LevelElement>();
@@ -187,7 +186,7 @@ public class Level : MonoBehaviour
 	{
 		if (mIsPlaying)
 		{
-			mCharater.transform.Translate(Vector3.right * Time.deltaTime * 4);
+			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -4);
 		}
 	}
 }
