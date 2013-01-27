@@ -17,8 +17,9 @@ public class CharacterManager : MonoBehaviour
 	
 	
 	bool mAsShield = false;
-	bool mIsGlissing = true;
-	bool mIsAttacking = true;
+	bool mIsGlissing = false;
+	bool mIsJumping = false;
+	bool mIsAttacking = false;
 	bool mAscollade = false;
 
 
@@ -31,7 +32,7 @@ public class CharacterManager : MonoBehaviour
 		Debug.Log("HandleJump");
 		CleanSound();
 		mIsGlissing = false;
-		
+		mIsJumping = true;
 		mAnimation["Jump"].layer = 1;
 		mAnimation.Play("Jump");
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
@@ -54,7 +55,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			CleanSound();
 			mIsGlissing = true;
-	
+			mIsJumping = false;
 			mAnimation["Slide"].layer = 1;
 			mAnimation.Play("Slide");
 			mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
@@ -66,7 +67,7 @@ public class CharacterManager : MonoBehaviour
 		if(!mIsDead)
 		{
 			CleanSound();
-			
+			mIsJumping = false;
 			mIsGlissing = false;
 			mAnimation["Run"].layer = 1;
 			mAnimation.Play("Run");
@@ -187,11 +188,19 @@ public class CharacterManager : MonoBehaviour
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
 			
-			if( other.gameObject.name == "GL(Clone)" || other.gameObject.name == "Ground_L(Clone)" ||  other.gameObject.name == "Ground_Hole(Clone)")
+			if(( other.gameObject.name == "GL(Clone)" || other.gameObject.name == "Ground_L(Clone)" ||  other.gameObject.name == "Ground_Hole(Clone)" || other.gameObject.name == "GD(Clone)") && !mIsJumping)
 			{
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y+1.2f, 0);
 			}
-			
+			else if(( other.gameObject.name == "GL(Clone)" || other.gameObject.name == "Ground_L(Clone)" ||  other.gameObject.name == "Ground_Hole(Clone)" || other.gameObject.name == "GD(Clone)") && mIsJumping)
+			{
+				float lTime = mAnimation["Jump"].time;
+				mAnimation.Stop("Jump");
+				mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,lTime);
+				mAnimation.Play("Run");
+				
+				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
+			}
 		}
 
     }
