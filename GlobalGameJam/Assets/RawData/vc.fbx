@@ -10,10 +10,10 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2013
 		Month: 01
-		Day: 26
-		Hour: 20
-		Minute: 01
-		Second: 48
+		Day: 27
+		Hour: 15
+		Minute: 27
+		Second: 51
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-01-26 20:01:48:000"
+CreationTime: "2013-01-27 15:27:51:000"
 Creator: "Blender version 2.63 (sub 0)"
 
 ; Object definitions
@@ -57,7 +57,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Model: "Model::vc", "Mesh" {
+	Model: "Model::GF", "Mesh" {
 		Version: 232
 		Properties60:  {
 			Property: "QuaternionInterpolate", "bool", "",0
@@ -136,8 +136,8 @@ Objects:  {
 		MultiTake: 1
 		Shading: Y
 		Culling: "CullingOff"
-		Vertices: 1.300000,-0.100000,1.750000,0.700000,-0.100000,1.750000,1.300000,-0.100000,2.000000,0.700000,-0.100000,2.000000,1.300000,0.100000,2.000000,0.700000,0.100000,2.000000,1.300000,0.100000,2.250000
-		,0.700000,0.100000,2.250000,1.300000,-0.100000,0.000000,0.700000,-0.100000,0.000000
+		Vertices: 1.300000,-0.100000,0.550000,0.700000,-0.100000,0.550000,1.300000,-0.100000,0.800000,0.700000,-0.100000,0.800000,1.300000,0.100000,0.800000,0.700000,0.100000,0.800000,1.300000,0.100000,1.050000
+		,0.700000,0.100000,1.050000,1.300000,-0.100000,0.000000,0.700000,-0.100000,0.000000
 		PolygonVertexIndex: 1,0,2,-4,6,7,5,-5,0,1,9,-9
 		Edges: 
 		GeometryVersion: 124
@@ -287,7 +287,7 @@ Objects:  {
 		}
 		NbPoseNodes: 1
 		PoseNode:  {
-			Node: "Model::vc"
+			Node: "Model::GF"
 			Matrix: 1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
 		}
 	}
@@ -309,7 +309,7 @@ Objects:  {
 ;------------------------------------------------------------------
 
 Relations:  {
-	Model: "Model::vc", "Mesh" {
+	Model: "Model::GF", "Mesh" {
 	}
 	Model: "Model::Producer Perspective", "Camera" {
 	}
@@ -339,9 +339,9 @@ Relations:  {
 ;------------------------------------------------------------------
 
 Connections:  {
-	Connect: "OO", "Model::vc", "Model::Scene"
-	Connect: "OO", "Material::block__block_png", "Model::vc"
-	Connect: "OO", "Texture::block_png", "Model::vc"
+	Connect: "OO", "Model::GF", "Model::Scene"
+	Connect: "OO", "Material::block__block_png", "Model::GF"
+	Connect: "OO", "Texture::block_png", "Model::GF"
 	Connect: "OO", "Video::block_png", "Texture::block_png"
 }
 ;Takes and animation section
