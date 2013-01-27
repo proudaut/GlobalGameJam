@@ -22,6 +22,8 @@ public class Level : MonoBehaviour
 	
 	public AudioSource mSound;
 	public TextAsset mLevelDescriptor;
+	public TextAsset mLevelConfig;
+	
 	
 	private bool mIsPlaying = false;
 	
@@ -108,11 +110,36 @@ public class Level : MonoBehaviour
 	void Start () 
 	{
 		LoadLevel();
+		LoadConfig();
 		GenerateLevel();
+	}
+	
+	void LoadConfig()
+	{
+		IDictionary lElementList = (IDictionary)Prime31.Json.jsonDecode(mLevelConfig.text);
+		
+		mDuration = int.Parse(lElementList["Level_size"].ToString());	
+		mActionTrack.mDuration = int.Parse(lElementList["Action_size"].ToString());
+		mMoveTrack.mDuration = int.Parse(lElementList["Move_size"].ToString());
+		
+		mMoveTrack.mTopMax = int.Parse(lElementList["Jump_max"].ToString());
+		mMoveTrack.mMinMax = int.Parse(lElementList["Slide_max"].ToString());
+		
+		mActionTrack.mTopMax = int.Parse(lElementList["Strike_max"].ToString());
+		mActionTrack.mMinMax = int.Parse(lElementList["Prot_max"].ToString());
+		
+		
+		mMoveTrack.Configure();
+		mActionTrack.Configure();
+		
+		
+
+
 	}
 	
 	void LoadLevel()
 	{
+		
 		ArrayList lElementList = (ArrayList)Prime31.Json.jsonDecode(mLevelDescriptor.text);
 		foreach(IDictionary lDic in lElementList)
 		{
