@@ -21,8 +21,10 @@ public class Level : MonoBehaviour
 	
 	
 	public AudioSource mSound;
-	public TextAsset mLevelDescriptor;
-	public TextAsset mLevelConfig;
+	
+	public static int mCurrentScene = 0;
+	public List<TextAsset> mLevelDescriptors = new List<TextAsset>();
+	public List<TextAsset> mLevelConfigs = new List<TextAsset>();
 	
 	
 	private bool mIsPlaying = false;
@@ -74,7 +76,7 @@ public class Level : MonoBehaviour
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharactereManager.mYPosition = 1;
 		mCharater.transform.localPosition = new Vector3(0,3,0);
-
+		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
 		
 		
 		yield return new WaitForSeconds(0.1f);
@@ -88,23 +90,12 @@ public class Level : MonoBehaviour
 		mIndexAnimation = 0;
 		
 
-		mActionTrack.Play();
-		mMoveTrack.Play();
 	}
 	
 	
 	public void Stop()
 	{
-		mCharactereManager.mAnimation.Stop();
-		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
-		mCharater.transform.localPosition = new Vector3(0,3,0);
-		
-		mCharactereManager.mIsDead = true;
-		mIsPlaying = false;
-		mSound.Stop();
-		
-		mActionTrack.Stop();
-		mMoveTrack.Stop();
+		Application.LoadLevel("LevelScene");
 	}
 	
 	
@@ -118,7 +109,7 @@ public class Level : MonoBehaviour
 	
 	void LoadConfig()
 	{
-		IDictionary lElementList = (IDictionary)Prime31.Json.jsonDecode(mLevelConfig.text);
+		IDictionary lElementList = (IDictionary)Prime31.Json.jsonDecode(mLevelConfigs[mCurrentScene].text);
 		
 		mDuration = int.Parse(lElementList["Level_size"].ToString());	
 		mActionTrack.mDuration = int.Parse(lElementList["Action_size"].ToString());
@@ -141,8 +132,7 @@ public class Level : MonoBehaviour
 	
 	void LoadLevel()
 	{
-		
-		ArrayList lElementList = (ArrayList)Prime31.Json.jsonDecode(mLevelDescriptor.text);
+		ArrayList lElementList = (ArrayList)Prime31.Json.jsonDecode(mLevelDescriptors[mCurrentScene].text);
 		foreach(IDictionary lDic in lElementList)
 		{
 			LevelElement lLevelElement = new LevelElement(lDic);
@@ -285,9 +275,17 @@ public class Level : MonoBehaviour
 				}
 				else
 				{
-					Stop();
+					Stop ();
+					LoadNextScene();
 				}
 			}
 		}
 	}
+	
+	void LoadNextScene()
+	{
+		mCurrentScene++;
+		Application.LoadLevel("LevelScene");
+	}
+
 }

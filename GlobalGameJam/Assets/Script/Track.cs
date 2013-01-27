@@ -15,8 +15,14 @@ public class Track : MonoBehaviour
 	public Level mLevel;
 	public CharacterManager mCharactereManager;
 	public GameObject mInputPrefab;
+	
 	public TrackType mTrackType;
 	public Dictionary<int,InPutManager> mInputList = new Dictionary<int, InPutManager>();
+	public List<GameObject> mInputInstanciate = new List<GameObject>();
+	
+	
+	
+	
 	public MovieClipBehaviour mTrackBackGround;
 	public UILabel mTopLabelMax;
 	public UILabel mMinLabelMax;
@@ -25,12 +31,10 @@ public class Track : MonoBehaviour
 	public int mTopMax;
 	public int mMinMax;
 	public int mDuration;
-
 	
 	
 	private bool mIsPlaying = false;
-	private float mStartTime =0;
-	private int mIndexAnimation = 0;
+
 	void Start () 
 	{
 	}
@@ -39,6 +43,17 @@ public class Track : MonoBehaviour
 
 	public void Configure()
 	{
+		foreach(GameObject lObj in mInputInstanciate)
+		{
+			Destroy(lObj);
+		}
+		mInputInstanciate.Clear();
+		mInputList.Clear();
+		
+		
+		
+		
+		
 		mTopLabelMax.text = mTopMax.ToString();
 		mMinLabelMax.text = mMinMax.ToString();
 		if(mLevel != null && mDuration==0)
@@ -58,6 +73,7 @@ public class Track : MonoBehaviour
 			for(int i=0; i<mDuration; i++)
 			{
 				GameObject lInput = Instantiate(mInputPrefab) as GameObject;
+				mInputInstanciate.Add(lInput);
 				lInput.transform.parent = this.transform;
 				InPutManager lInPutManager = lInput.GetComponent<InPutManager>();
 				lInPutManager.mPosition = i;
@@ -142,23 +158,6 @@ public class Track : MonoBehaviour
 		}
 	}
 	
-	public void Play()
-	{
-		mIsPlaying = true;
-		mStartTime = Time.time -2;
-		mIndexAnimation = 0;
-	}
-	
-	public void Stop()
-	{
-		mIsPlaying = false;
-	}
-	
-	void Update () 
-	{
-		if (mIsPlaying)
-		{
-		}
-	}
+
 
 }

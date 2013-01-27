@@ -31,7 +31,7 @@ public class CharacterManager : MonoBehaviour
 	public int mYPosition = 1;
 	public bool fall  = false;
 
-	private float mNewRealY;
+	public float mNewRealY;
 
 	ActionType mActionType = ActionType.Nothing;
 	MoveType mMoveType = MoveType.Nothing;
