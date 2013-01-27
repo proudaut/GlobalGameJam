@@ -58,7 +58,10 @@ public class Track : MonoBehaviour
 		mMinLabelMax.text = mMinMax.ToString();
 		if(mLevel != null && mDuration==0)
 		{
-			mTrackBackGround.gameObject.SetActiveRecursively(false);
+			if(mTrackBackGround!= null)
+			{
+				mTrackBackGround.gameObject.SetActiveRecursively(false);
+			}
 		}
 		if(mLevel != null && mDuration>0)
 		{

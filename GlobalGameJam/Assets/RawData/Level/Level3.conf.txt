@@ -2,6 +2,6 @@
 "Action_size":4,
 "Jump_max":4,
 "Slide_max":4,
-"Strike_max":1,
-"Prot_max":1,
+"Strike_max":2,
+"Prot_max":2,
 "Level_size":12}
