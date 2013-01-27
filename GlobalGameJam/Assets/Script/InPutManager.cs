@@ -70,7 +70,7 @@ public class InPutManager : MonoBehaviour
 	        {
 				mInPutState = InPutState.Down;
 			}	
-			Play(0);
+			///Play(0);
 		}
 	}
 	
@@ -139,10 +139,10 @@ public class InPutManager : MonoBehaviour
 	
 	void SetFrameButton(Button _Button, int _Frame)
 	{
-			_Button.mCurrentFrame = _Frame;
-			_Button.mDefaultFrame = _Frame;
-			_Button.mOverFrame = _Frame;
-			_Button.UpdateFrame();
+		_Button.mCurrentFrame = _Frame;
+		_Button.mDefaultFrame = _Frame;
+		_Button.mOverFrame = _Frame;
+		_Button.UpdateFrame();
 	}
 	
 }
