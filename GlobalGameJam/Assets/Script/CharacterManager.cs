@@ -270,6 +270,14 @@ public class CharacterManager : MonoBehaviour
 			}
 			*/
 			
+			if(lComplexElementLevel.GF &&  !fall)
+			{	
+				Debug.Log("2");
+				StartCoroutine(Die());
+				yield break;
+			}
+			
+			
 			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
 			{
 				mMoveType = MoveType.Nothing;
@@ -304,6 +312,13 @@ public class CharacterManager : MonoBehaviour
 		}
 		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Jump)  // Attack Jump
 		{
+			if(lComplexElementLevel.GF &&  !fall)
+			{	
+				Debug.Log("2");
+				StartCoroutine(Die());
+				yield break;
+			}
+			
 			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
 			{
 				mMoveType = MoveType.Nothing;
@@ -338,6 +353,13 @@ public class CharacterManager : MonoBehaviour
 				StartCoroutine(Die());
 				yield break;
 			}*/
+			
+			if(lComplexElementLevel.GF &&  !fall)
+			{	
+				Debug.Log("2");
+				StartCoroutine(Die());
+				yield break;
+			}
 			
 			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
 			{
