@@ -216,7 +216,7 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD ) && ! lComplexElementLevelDown.hc)
+			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
 			{
 				Debug.Log ("walk FALL");
 				MoveDown(_Position);
@@ -234,7 +234,7 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD )
+			if( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) )
 			{
 				Debug.Log ("walk FALL");
 				MoveDown(_Position);
@@ -251,7 +251,7 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD ) && ! lComplexElementLevelDown.hc)
+			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
 			{
 				Debug.Log ("walk FALL");
 				MoveDown(_Position);
@@ -275,8 +275,9 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if( (lComplexElementLevel.GR || lComplexElementLevel.GD) && !lComplexElementLevel.hc)
+			if( (lComplexElementLevel.GR ||  (lComplexElementLevel.GD && !fall)) && !lComplexElementLevel.hc)
 			{
+				Debug.Log ("JUMP " + lComplexElementLevel.GR + " "+ lComplexElementLevelDown.GD);
 				MoveUp();
 				yield break;
 			}
@@ -297,7 +298,7 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if( (lComplexElementLevel.GR || lComplexElementLevel.GD) )
+			if( (lComplexElementLevel.GR ||(lComplexElementLevel.GD && !fall)) )
 			{
 				MoveUp();
 				yield break;
@@ -319,7 +320,7 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if( (lComplexElementLevel.GR || lComplexElementLevel.GD) && !lComplexElementLevel.hc)
+			if( (lComplexElementLevel.GR ||(lComplexElementLevel.GD && !fall)) && !lComplexElementLevel.hc)
 			{
 				MoveUp();
 				yield break;
