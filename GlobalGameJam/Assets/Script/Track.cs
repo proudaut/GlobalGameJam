@@ -20,7 +20,7 @@ public class Track : MonoBehaviour
 	public MovieClipBehaviour mTrackBackGround;
 	public UILabel mTopLabelMax;
 	public UILabel mMinLabelMax;
-	
+	public AudioSource mSourceNot;
 	
 	public int mTopMax;
 	public int mMinMax;
@@ -53,8 +53,6 @@ public class Track : MonoBehaviour
 			}
 			float lD = mLevel.mDuration ;
 			float lD1 = mDuration;
-			
-			
 			
 			int count = (int)Mathf.Ceil(lD/lD1);
 			for(int i=0; i<mDuration; i++)
@@ -108,16 +106,16 @@ public class Track : MonoBehaviour
 					lCountDown++;
 				}
 			}
-			if( lCountDown < mTopMax  )
+			if( lCountDown < mMinMax )
 			{
 				return true;
 			}
 			else
 			{
+				mSourceNot.Play();
 				return false;
 			}
 		}
-		
 		else if(_InPutState == InPutState.Up)
 		{
 			int lCountUp = 0;
@@ -128,12 +126,13 @@ public class Track : MonoBehaviour
 					lCountUp++;
 				}
 			}
-			if( lCountUp <  mMinMax)
+			if( lCountUp < mTopMax )
 			{
 				return true;
 			}
 			else
 			{
+				mSourceNot.Play();
 				return false;
 			}
 		}

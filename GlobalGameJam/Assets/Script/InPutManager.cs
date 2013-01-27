@@ -81,6 +81,7 @@ public class InPutManager : MonoBehaviour
 					mInPutState = InPutState.Down;
 				}
 			}	
+			//Play(1);
 		}
 	}
 	
