@@ -49,10 +49,16 @@ public class Level : MonoBehaviour
 	
 	public void Play()
 	{
+		StartCoroutine( ReadyStart());
+	}
+	
+	IEnumerator ReadyStart()
+	{
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharater.transform.localPosition = new Vector3(0,3,0);
 		
+		yield return new WaitForSeconds(0.1f);
 		
 		mCharactereManager.mIsDead = false;
 		mIsPlaying = true;
@@ -62,6 +68,7 @@ public class Level : MonoBehaviour
 			lTrack.Play();
 		}	
 	}
+	
 	
 	public void Stop()
 	{

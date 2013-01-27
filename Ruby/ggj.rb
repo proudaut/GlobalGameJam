@@ -1,6 +1,10 @@
 require "JSON"
 
-file_name = "Level_6.json"
+
+
+file_name = ARGV[0]
+
+return unless file_name
 
 json_file = File.open(file_name)
 
