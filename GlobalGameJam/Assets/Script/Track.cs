@@ -35,7 +35,8 @@ public class Track : MonoBehaviour
 				lInPutManager.mPosition = i;
 				lInPutManager.mCharactereManager = mCharactereManager;
 				lInPutManager.mTrackType = mTrackType;
-				lInput.transform.localPosition = new Vector3(lInPutManager.mPosition * 5 ,0,0);
+				lInput.transform.localPosition = new Vector3(lInPutManager.mPosition * 1.88f ,0,0);
+				lInput.transform.localScale = new Vector3(1,1,1);
 				
 				mInputList.Add(lInPutManager.mPosition,lInPutManager);
 				
@@ -56,7 +57,8 @@ public class Track : MonoBehaviour
 					
 					
 					
-					lInputCopy.transform.localPosition = new Vector3(lInPutManagerCopy.mPosition * 5,0,0);
+					lInputCopy.transform.localPosition = new Vector3(lInPutManagerCopy.mPosition * 1.88f ,0,0);
+					lInputCopy.transform.localScale = new Vector3(1,1,1);
 				}
 			}
 		}
