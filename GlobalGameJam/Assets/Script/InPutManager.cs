@@ -91,8 +91,8 @@ public class InPutManager : MonoBehaviour
 		{
 			switch (mInPutState)
 			{
-				case InPutState.Down : mCharactereManager.HandleShield(_Position); break;
-				case InPutState.Up : mCharactereManager.HandleAttack(_Position); break;
+				case InPutState.Up : mCharactereManager.HandleShield(_Position); break;
+				case InPutState.Down  : mCharactereManager.HandleAttack(_Position); break;
 				case InPutState.Middle : mCharactereManager.HandleIdleAction(_Position);break;
 			}
 		}

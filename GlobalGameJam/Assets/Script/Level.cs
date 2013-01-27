@@ -275,7 +275,10 @@ public class Level : MonoBehaviour
 				mStartTime = Time.time;
 				if(mIndexAnimation<mDuration)
 				{
-					mActionTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
+					if(mActionTrack.mInputList.ContainsKey(mIndexAnimation))
+					{
+						mActionTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
+					}
 					mMoveTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
 
 					mIndexAnimation++;
