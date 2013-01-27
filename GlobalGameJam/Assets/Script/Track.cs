@@ -11,12 +11,21 @@ public enum TrackType
 
 public class Track : MonoBehaviour 
 {
-	public int mDuration;
+
 	public Level mLevel;
 	public CharacterManager mCharactereManager;
 	public GameObject mInputPrefab;
 	public TrackType mTrackType;
 	public Dictionary<int,InPutManager> mInputList = new Dictionary<int, InPutManager>();
+	public MovieClipBehaviour mTrackBackGround;
+	public UILabel mTopLabelMax;
+	public UILabel mMinLabelMax;
+	
+	
+	public int mTopMax;
+	public int mMinMax;
+	public int mDuration;
+
 	
 	
 	private bool mIsPlaying = false;
@@ -24,8 +33,24 @@ public class Track : MonoBehaviour
 	private int mIndexAnimation = 0;
 	void Start () 
 	{
-		if(mLevel != null)
+	}
+	
+	
+
+	public void Configure()
+	{
+		mTopLabelMax.text = mTopMax.ToString();
+		mMinLabelMax.text = mMinMax.ToString();
+		if(mLevel != null && mDuration==0)
 		{
+			mTrackBackGround.gameObject.SetActiveRecursively(false);
+		}
+		if(mLevel != null && mDuration>0)
+		{
+			if(mTrackBackGround != null)
+			{
+				mTrackBackGround.movieClip.gotoAndStop(	mDuration - 1 );
+			}
 			int count = mLevel.mDuration/mDuration;
 			for(int i=0; i<mDuration; i++)
 			{
@@ -35,6 +60,7 @@ public class Track : MonoBehaviour
 				lInPutManager.mPosition = i;
 				lInPutManager.mCharactereManager = mCharactereManager;
 				lInPutManager.mTrackType = mTrackType;
+				lInPutManager.mTrack = this;
 				lInput.transform.localPosition = new Vector3(lInPutManager.mPosition * 1.88f ,0,0);
 				lInput.transform.localScale = new Vector3(1,1,1);
 				
@@ -50,6 +76,7 @@ public class Track : MonoBehaviour
 					lInPutManagerCopy.mIsCopy = true;
 					lInPutManagerCopy.mTrackType = mTrackType;
 					lInPutManagerCopy.mCharactereManager = lInPutManager.mCharactereManager;
+					lInPutManagerCopy.mTrack = this;
 					lInPutManager.AddInputManagerCopy(lInPutManagerCopy);
 					
 					
@@ -64,9 +91,51 @@ public class Track : MonoBehaviour
 		}
 	}
 	
-	
-
-	
+	public bool isValidCheck(InPutState _InPutState)
+	{
+		if(_InPutState == InPutState.Down)
+		{
+			int lCountDown = 0;
+			foreach(InPutManager lInPutManager in mInputList.Values)
+			{
+				if(lInPutManager.mInPutState == InPutState.Down && lInPutManager.mIsCopy == false)
+				{
+					lCountDown++;
+				}
+			}
+			if( lCountDown < mMinMax )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else if(_InPutState == InPutState.Up)
+		{
+			int lCountUp = 0;
+			foreach(InPutManager lInPutManager in mInputList.Values)
+			{
+				if(lInPutManager.mInPutState == InPutState.Up && lInPutManager.mIsCopy == false)
+				{
+					lCountUp++;
+				}
+			}
+			if( lCountUp < mTopMax )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
+	}
 	
 	public void Play()
 	{

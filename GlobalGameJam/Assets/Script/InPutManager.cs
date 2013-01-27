@@ -15,9 +15,11 @@ public class InPutManager : MonoBehaviour
 {
 	public TrackType mTrackType;
 	public CharacterManager mCharactereManager;
+	public Track mTrack;
+	
 	
 	[SerializeField]
-	private InPutState mInPutStateField = InPutState.Middle;
+	public InPutState mInPutStateField = InPutState.Middle;
 	public InPutState mInPutState
 	{
 		set
@@ -60,17 +62,25 @@ public class InPutManager : MonoBehaviour
 		{
 			if ( _button == mButtonTop )
 			{
-				mInPutState = InPutState.Up;
+				if(mTrack.isValidCheck( InPutState.Up))
+				{
+					mInPutState = InPutState.Up;
+				}
 			}
 			else if ( _button == mButtonMiddle )
 	        {
-				mInPutState = InPutState.Middle;
+				if(mTrack.isValidCheck( InPutState.Middle))
+				{
+					mInPutState = InPutState.Middle;
+				}
 			}
 			else if ( _button == mButtonDown )
 	        {
-				mInPutState = InPutState.Down;
+				if(mTrack.isValidCheck( InPutState.Down))
+				{
+					mInPutState = InPutState.Down;
+				}
 			}	
-			///Play(0);
 		}
 	}
 	
