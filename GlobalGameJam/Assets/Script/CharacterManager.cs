@@ -262,18 +262,30 @@ public class CharacterManager : MonoBehaviour
 	
 		else if(mActionType == ActionType.Nothing && mMoveType == MoveType.Jump)  // Jump
 		{
-			if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid && !fall ) )
+			/*if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid && !fall ) )
 			{
 				Debug.Log("1");
 				StartCoroutine(Die());
 				yield break;
 			}
+			*/
+			
+			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
+			{
+				mMoveType = MoveType.Nothing;
+				CheckWalk(lComplexElementLevel, lComplexElementLevelDown,_Position);
+				yield break;
+			}
+			
+			
 			if( (!(lComplexElementLevel.G || lComplexElementLevel.hc)) && lComplexElementLevelUp.spi)
 			{
 				Debug.Log("2");
 				StartCoroutine(Die());
 				yield break;
 			}
+		
+			
 			
 			if( (lComplexElementLevel.GR ||  (lComplexElementLevel.GD && !fall)) && !lComplexElementLevel.hc)
 			{
@@ -292,11 +304,18 @@ public class CharacterManager : MonoBehaviour
 		}
 		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Jump)  // Attack Jump
 		{
-			if ((lComplexElementLevel.G) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid && !fall ) )
+			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
+			{
+				mMoveType = MoveType.Nothing;
+				CheckWalk(lComplexElementLevel,lComplexElementLevelDown,_Position);
+				yield break;
+			}
+			
+			/*if ((lComplexElementLevel.G) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid && !fall ) )
 			{
 				StartCoroutine(Die());
 				yield break;
-			}
+			}*/
 			
 			if( (lComplexElementLevel.GR ||(lComplexElementLevel.GD && !fall)) )
 			{
@@ -310,15 +329,23 @@ public class CharacterManager : MonoBehaviour
 				MoveDown(_Position);
 				yield break;
 			}
-			
+
 		}
 		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Jump)  // Shield Jump
 		{
-			if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.mid && !fall ) )
+			/*if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.mid && !fall ) )
 			{
 				StartCoroutine(Die());
 				yield break;
+			}*/
+			
+			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
+			{
+				mMoveType = MoveType.Nothing;
+				CheckWalk(lComplexElementLevel,lComplexElementLevelDown,_Position);
+				yield break;
 			}
+			
 			
 			if( (lComplexElementLevel.GR ||(lComplexElementLevel.GD && !fall)) && !lComplexElementLevel.hc)
 			{
@@ -388,6 +415,61 @@ public class CharacterManager : MonoBehaviour
 	
 	
 
+	void CheckWalk(ComplexElementLevel lComplexElementLevel,ComplexElementLevel lComplexElementLevelDown, int _Position)
+	{
+		mAnimation.Stop("Jump");
+		mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
+		if(mActionType == ActionType.Nothing && mMoveType == MoveType.Nothing)  // walk
+		{
+			if( (lComplexElementLevel.spi) || (lComplexElementLevel.vc && !fall) || (lComplexElementLevel.mid && !fall ) || (lComplexElementLevel.GF) )
+			{
+				Debug.Log(lComplexElementLevel.spi+ " "  +lComplexElementLevel.vc+ " " + lComplexElementLevel.mid+ " "  + lComplexElementLevel.GF);
+				StartCoroutine(Die());
+				return;
+			}
+			
+			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
+			{
+				Debug.Log ("walk FALL");
+				MoveDown(_Position);
+				return;
+			}	
+		}
+		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Nothing)  // Attack walk
+		{
+			if( (lComplexElementLevel.spi) || (lComplexElementLevel.mid && !fall) || (lComplexElementLevel.GF) )
+			{
+				Debug.Log("2");
+				StartCoroutine(Die());
+				return;
+			}
+			
+			if( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) )
+			{
+				Debug.Log ("walk FALL");
+				MoveDown(_Position);
+				return;
+			}
+			
+		}
+		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Nothing)  // Shield walk
+		{
+			if( (lComplexElementLevel.vc && !fall) || (lComplexElementLevel.mid && !fall  ) || (lComplexElementLevel.GF) )
+			{
+				Debug.Log("3");
+				StartCoroutine(Die());
+				return;
+			}
+			
+			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
+			{
+				Debug.Log ("walk FALL");
+				MoveDown(_Position);
+				return;
+			}
+		}
+	}
+	
 		
 	
 	
@@ -413,6 +495,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		mIsDead = true;
 		yield return true;
+		yield return new WaitForSeconds(0.2f);
 		mAnimation.Stop();
 		mAnimation.Play("Die");
 		yield return new WaitForSeconds(0.5f);
