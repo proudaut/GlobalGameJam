@@ -11,7 +11,11 @@ public class Level : MonoBehaviour
 	public GameObject mCharater;
 	public CharacterManager mCharactereManager;
 	
-	public List<Track> mTrack;
+	public Track mActionTrack;
+	public Track mMoveTrack;
+	
+	
+	
 	public List<LevelElement> mLevelElements =  new List<LevelElement>();
 	public Dictionary<LevelElement, GameObject> mLevelElementCreated = new Dictionary<LevelElement, GameObject>();
 	
@@ -38,6 +42,11 @@ public class Level : MonoBehaviour
 	public GameObject hc;
 	
 	
+	private float mStartTime =0;
+	private int mIndexAnimation = 0;
+	
+	
+	
 	void OnButtonClick(Button _button)
 	{
 		if(mIsPlaying == false)
@@ -59,7 +68,7 @@ public class Level : MonoBehaviour
 	{
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
-		mCharactereManager.mYPosition = 0;
+		mCharactereManager.mYPosition = 1;
 		mCharater.transform.localPosition = new Vector3(0,3,0);
 
 		
@@ -69,10 +78,14 @@ public class Level : MonoBehaviour
 		mCharactereManager.mIsDead = false;
 		mIsPlaying = true;
 		mSound.Play();
-		foreach(Track lTrack in mTrack)
-		{
-			lTrack.Play();
-		}	
+		
+
+		mStartTime = Time.time -2;
+		mIndexAnimation = 0;
+		
+
+		mActionTrack.Play();
+		mMoveTrack.Play();
 	}
 	
 	
@@ -85,10 +98,9 @@ public class Level : MonoBehaviour
 		mCharactereManager.mIsDead = true;
 		mIsPlaying = false;
 		mSound.Stop();
-		foreach(Track lTrack in mTrack)
-		{
-			lTrack.Stop();
-		}	
+		
+		mActionTrack.Stop();
+		mMoveTrack.Stop();
 	}
 	
 	
@@ -219,7 +231,7 @@ public class Level : MonoBehaviour
 	
 	
 	
-	
+
 	
 	
 	
@@ -229,6 +241,21 @@ public class Level : MonoBehaviour
 		if (mIsPlaying && !mCharactereManager.mIsDead)
 		{
 			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -2);
+			if(Time.time - mStartTime>0.99999)
+			{
+				mStartTime = Time.time;
+				if(mIndexAnimation<mDuration)
+				{
+					mActionTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
+					mMoveTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
+
+					mIndexAnimation++;
+				}
+				else
+				{
+					Stop();
+				}
+			}
 		}
 	}
 }

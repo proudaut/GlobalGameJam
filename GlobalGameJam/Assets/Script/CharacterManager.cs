@@ -2,6 +2,20 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
+public enum ActionType
+{
+	Nothing,
+	Attack,
+	Shield,
+}
+public enum MoveType
+{
+	Nothing,
+	Slide,
+	Jump,
+}
+
 public class CharacterManager : MonoBehaviour 
 {
 	public GameObject mJumpSound;
@@ -14,32 +28,21 @@ public class CharacterManager : MonoBehaviour
 	public Level mLevel;
 	public Animation mAnimation;
 	public bool mIsDead;
+	public int mYPosition = 1;
 	
 	
 	bool mAsShield = false;
 	bool mIsGlissing = false;
 	bool mIsJumping = false;
 	bool mIsAttacking = false;
-	bool mAscollade = false;
+	
 
-	
-	
-	public int mYPosition = 0;
-	
+	ActionType mActionType = ActionType.Nothing;
+	MoveType mMoveType = MoveType.Nothing;
 	
 	public List<GameObject> mInstanciateSound = new List<GameObject>();
 	
-	public void HandleJump()
-    {
-		Debug.Log("HandleJump");
-		CleanSound();
-		mIsGlissing = false;
-		mIsJumping = true;
-		mAnimation["Jump"].layer = 1;
-		mAnimation.Play("Jump");
-		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
-	}
-	
+
 	public void Explode()
 	{
 		mExplosion.Play();
@@ -50,8 +53,20 @@ public class CharacterManager : MonoBehaviour
 		mExplosion.Stop();
 	}
 	
+	public void HandleJump(int _Position)
+    {
+		Debug.Log("HandleJump");
+		CleanSound();
+		mIsGlissing = false;
+		mIsJumping = true;
+		mAnimation["Jump"].layer = 1;
+		mAnimation.Play("Jump");
+		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
+		
+		StartCoroutine(ManageMove(_Position));
+	}
 	
-	public void HandleSlide()
+	public void HandleSlide(int _Position)
     {
 		if(!mIsDead)
 		{
@@ -61,10 +76,12 @@ public class CharacterManager : MonoBehaviour
 			mAnimation["Slide"].layer = 1;
 			mAnimation.Play("Slide");
 			mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
+			
+			StartCoroutine(ManageMove(_Position));
 		}
 	}
 	
-	public void HandleIdleMovement()
+	public void HandleIdleMovement(int _Position)
     {
 		if(!mIsDead)
 		{
@@ -76,10 +93,13 @@ public class CharacterManager : MonoBehaviour
 			
 			if(mIdleMovementSound!= null)
 			mInstanciateSound.Add(Instantiate(mIdleMovementSound) as GameObject);
+			
+			StartCoroutine(ManageMove(_Position));
 		}
 	}
+
 	
-	public void HandleIdleAction()
+	public void HandleIdleAction(int _Position)
     {
 		if(!mIsDead)
 		{
@@ -90,13 +110,13 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 	
-	
 	public void HandleAttack(int _Position)
     {
 		if(!mIsDead)
 		{
 			CleanSound();
 			mAsShield = false;
+			mIsAttacking = true;
 			mAnimation["Attack"].layer = 2;
 			mAnimation.Play("Attack");
 			mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
@@ -104,6 +124,21 @@ public class CharacterManager : MonoBehaviour
 			StartCoroutine(PerformAttack(_Position));
 		}
 	}
+	
+	
+	public void HandleShield(int _Position)
+    {
+		if(!mIsDead)
+		{
+			CleanSound();
+			mAsShield = true;
+			mIsAttacking = false;
+			mAnimation["Shield"].layer = 2;
+			mAnimation.Play("Shield");
+			mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
+		}
+	}
+	
 	
 	
 	IEnumerator PerformAttack(int _Position)
@@ -124,16 +159,123 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 	
-	
-	public void HandleShield()
-    {
-		if(!mIsDead)
+	IEnumerator ManageMove(int _Position)
+	{
+		Debug.Log("Position : " + _Position + " " + mYPosition);
+		List<LevelElement> lLevelElemenCaseCurrent = new List<LevelElement>();
+		foreach(LevelElement lLevelElement in mLevel.mLevelElements)
 		{
-			CleanSound();
-			mAsShield = true;
-			mAnimation["Shield"].layer = 2;
-			mAnimation.Play("Shield");
-			mInstanciateSound.Add(Instantiate(mShieldSound) as GameObject);
+			if( (lLevelElement.mX == _Position) &&  (lLevelElement.mY == mYPosition))
+			{
+				Debug.Log("Add " + lLevelElement.mLevelElementType);
+				lLevelElemenCaseCurrent.Add(lLevelElement);
+			}
+		}
+		
+		List<LevelElement> lLevelElemenCaseUp = new List<LevelElement>();
+		foreach(LevelElement lLevelElement in mLevel.mLevelElements)
+		{
+			if( (lLevelElement.mX == _Position) && (lLevelElement.mY == mYPosition +1))
+			{
+				lLevelElemenCaseUp.Add(lLevelElement);
+			}
+		}
+		
+		
+		ComplexElementLevel lComplexElementLevel = new ComplexElementLevel(lLevelElemenCaseCurrent);
+		ComplexElementLevel lComplexElementLevelUp = new ComplexElementLevel(lLevelElemenCaseUp);
+		
+		
+		
+		if(mActionType == ActionType.Nothing && mMoveType == MoveType.Nothing)  // walk
+		{
+			if( (lComplexElementLevel.spi) || (lComplexElementLevel.vc ) || (lComplexElementLevel.mid ) || (lComplexElementLevel.GF) )
+			{
+				Debug.Log(lComplexElementLevel.spi+ " "  +lComplexElementLevel.vc+ " " + lComplexElementLevel.mid+ " "  + lComplexElementLevel.GF);
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Nothing)  // Attack walk
+		{
+			if( (lComplexElementLevel.spi) || (lComplexElementLevel.mid ) || (lComplexElementLevel.GF) )
+			{
+				Debug.Log("2");
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Nothing)  // Shield walk
+		{
+			if( (lComplexElementLevel.vc ) || (lComplexElementLevel.mid ) || (lComplexElementLevel.GF) )
+			{
+				Debug.Log("3");
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+	
+		
+		
+		
+	
+		else if(mActionType == ActionType.Nothing && mMoveType == MoveType.Jump)  // Jump
+		{
+			if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid) )
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
+			if(lComplexElementLevelUp.spi)
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Jump)  // Attack Jump
+		{
+			if ((lComplexElementLevel.G) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid) )
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Jump)  // Shield Jump
+		{
+			if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.mid) )
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		
+		
+		
+		
+	
+		else if(mActionType == ActionType.Nothing && mMoveType == MoveType.Slide)  // Slide
+		{
+			if(lComplexElementLevel.spi || lComplexElementLevel.low || lComplexElementLevel.GF ||   lComplexElementLevel.vc)
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Slide)  // Attack Slide
+		{
+			if(lComplexElementLevel.spi || lComplexElementLevel.low || lComplexElementLevel.GF)
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
+		}
+		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Slide)  // Shield Slide
+		{
+			if(lComplexElementLevel.low || lComplexElementLevel.GF ||   lComplexElementLevel.vc)
+			{
+				StartCoroutine(Die());
+				yield break;
+			}
 		}
 	}
 	
@@ -144,7 +286,6 @@ public class CharacterManager : MonoBehaviour
 	
 	private void CleanSound()
 	{
-		mAscollade = false;
 		List<GameObject> lRemoveList = new List<GameObject>();
 		foreach(GameObject lGameObject in mInstanciateSound)
 		{
@@ -171,11 +312,10 @@ public class CharacterManager : MonoBehaviour
 		mLevel.Stop();
 	}
 	
-	
+	/*
 	void OnCollisionEnter(Collision other) 
 	{
 		Debug.Log(other.gameObject.name);
-		//if( mAscollade == false) 
 		{
 			if( other.gameObject.name == "spi(Clone)" && mAsShield == false)
 			{
@@ -201,7 +341,6 @@ public class CharacterManager : MonoBehaviour
 			
 			if( other.gameObject.name == "GR(Clone)")
 			{
-				//mAscollade = true;
 				float lTime = mAnimation["Jump"].time;
 				mAnimation.Stop("Jump");
 				mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,lTime);
@@ -226,9 +365,18 @@ public class CharacterManager : MonoBehaviour
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
 		}
-
     }
-
+	 */
+	
+	
+	void MoveUp()
+	{
+	}
+	
+	void MoveDown()
+	{
+	}
+	
 	
 	// Use this for initialization
 	void Start ()
