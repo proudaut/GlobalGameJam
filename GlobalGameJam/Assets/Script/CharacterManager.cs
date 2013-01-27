@@ -218,6 +218,7 @@ public class CharacterManager : MonoBehaviour
 			
 			if(( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD ) && ! lComplexElementLevelDown.hc)
 			{
+				Debug.Log ("walk FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -235,6 +236,7 @@ public class CharacterManager : MonoBehaviour
 			
 			if( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD )
 			{
+				Debug.Log ("walk FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -251,6 +253,7 @@ public class CharacterManager : MonoBehaviour
 			
 			if(( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD ) && ! lComplexElementLevelDown.hc)
 			{
+				Debug.Log ("walk FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -267,6 +270,7 @@ public class CharacterManager : MonoBehaviour
 			}
 			if( (!(lComplexElementLevel.G || lComplexElementLevel.hc)) && lComplexElementLevelUp.spi)
 			{
+				Debug.Log("2");
 				StartCoroutine(Die());
 				yield break;
 			}
@@ -279,6 +283,7 @@ public class CharacterManager : MonoBehaviour
 			
 			if(( lComplexElementLevelDown.GL ) && ! lComplexElementLevelDown.hc)
 			{
+				Debug.Log ("JUMP1 FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -300,6 +305,7 @@ public class CharacterManager : MonoBehaviour
 			
 			if( lComplexElementLevelDown.GL )
 			{
+				Debug.Log ("JUMP2 FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -319,8 +325,9 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(( lComplexElementLevelDown.GL ) && ! lComplexElementLevelDown.hc)
+			if(( lComplexElementLevelDown.GL ) && !lComplexElementLevelDown.hc)
 			{
+				Debug.Log ("JUMP3 FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -338,8 +345,9 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD ) && ! lComplexElementLevelDown.hc)
+			if(( lComplexElementLevelDown.GL || (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
 			{
+				Debug.Log ("Slide FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -353,8 +361,9 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD )
+			if( lComplexElementLevelDown.GL ||(lComplexElementLevelDown.GD && !fall) )
 			{
+				Debug.Log ("Slide FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -367,8 +376,9 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(( lComplexElementLevelDown.GL || lComplexElementLevelDown.GD ) && ! lComplexElementLevelDown.hc)
+			if(( lComplexElementLevelDown.GL || (lComplexElementLevelDown.GD && !fall)) && ! lComplexElementLevelDown.hc)
 			{
+				Debug.Log ("Slide FALL");
 				MoveDown(_Position);
 				yield break;
 			}
@@ -425,9 +435,11 @@ public class CharacterManager : MonoBehaviour
 		Debug.Log("MoveDown()" + mYPosition );
 		mYPosition--;
 		
-		mNewRealY = this.transform.localPosition.y - 2.0f;
+
 		this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - 2.0f, 0);
-		
+		mNewRealY = this.transform.localPosition.y;
+			
+			
 		if(mActionType == ActionType.Attack)
 			mActionType = ActionType.Nothing;
 
@@ -440,7 +452,7 @@ public class CharacterManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
+		mNewRealY = this.transform.localPosition.y;
 	}
 	
 	// Update is called once per frame

@@ -51,7 +51,10 @@ public class Track : MonoBehaviour
 			{
 				mTrackBackGround.movieClip.gotoAndStop(	mDuration - 1 );
 			}
-			int count = mLevel.mDuration/mDuration;
+			float lD = mLevel.mDuration ;
+			float lD1 = mDuration;
+			
+			int count = (int)Mathf.Ceil(lD/lD1);
 			for(int i=0; i<mDuration; i++)
 			{
 				GameObject lInput = Instantiate(mInputPrefab) as GameObject;
