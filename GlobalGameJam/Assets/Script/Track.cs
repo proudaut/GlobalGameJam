@@ -87,7 +87,7 @@ public class Track : MonoBehaviour
 				mStartTime = Time.time;
 				if(mInputList.Count>mIndexAnimation)
 				{
-					mInputList[mIndexAnimation].Play();
+					mInputList[mIndexAnimation].Play(mIndexAnimation);
 					mIndexAnimation++;
 				}
 				else
