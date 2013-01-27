@@ -13,6 +13,9 @@ public class Level : MonoBehaviour
 	
 	public List<Track> mTrack;
 	public List<LevelElement> mLevelElements =  new List<LevelElement>();
+	public Dictionary<LevelElement, GameObject> mLevelElementCreated = new Dictionary<LevelElement, GameObject>();
+	
+	
 	public AudioSource mSound;
 	public TextAsset mLevelDescriptor;
 	
@@ -56,7 +59,10 @@ public class Level : MonoBehaviour
 	{
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
+		mCharactereManager.mYPosition = 0;
 		mCharater.transform.localPosition = new Vector3(0,3,0);
+
+		
 		
 		yield return new WaitForSeconds(0.1f);
 		
@@ -109,19 +115,17 @@ public class Level : MonoBehaviour
 	{
 		foreach(LevelElement lLevelElement in mLevelElements)
 		{
+			GameObject lInstanceElement = null;
 			switch(lLevelElement.mLevelElementType)
 			{
 				case LevelElementType.G :  
 				{
-					GameObject lInstanceElement = Instantiate(G) as GameObject;
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+					lInstanceElement = Instantiate(G) as GameObject;
 					break;
 				}
 				
 				case LevelElementType.GL : 
 				{
-					GameObject lInstanceElement =  null;
 					if(lLevelElement.mY == 0)
 					{
 						lInstanceElement = Instantiate(GroundL) as GameObject;
@@ -130,15 +134,12 @@ public class Level : MonoBehaviour
 					{
 						lInstanceElement = Instantiate(GL) as GameObject;
 					}
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
 					break;
 				}
 				
 				
 				case LevelElementType.GR :  
 				{
-					GameObject lInstanceElement =  null;
 					if(lLevelElement.mY == 0)
 					{
 						lInstanceElement = Instantiate(GroundR) as GameObject;
@@ -147,9 +148,6 @@ public class Level : MonoBehaviour
 					{
 						lInstanceElement = Instantiate(GR) as GameObject;
 					}
-				
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
 					break;
 				}
 				
@@ -157,7 +155,6 @@ public class Level : MonoBehaviour
 				
 				case LevelElementType.GD :  
 				{
-					GameObject lInstanceElement =  null;
 					if(lLevelElement.mY == 0)
 					{
 						lInstanceElement = Instantiate(GroundHole) as GameObject;
@@ -166,16 +163,11 @@ public class Level : MonoBehaviour
 					{
 						lInstanceElement = Instantiate(GD) as GameObject;
 					}
-					
-					
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
 					break;
 				}
 				
 				case LevelElementType.GF :
 				{
-					GameObject lInstanceElement =  null;
 					if(lLevelElement.mY == 0)
 					{
 						lInstanceElement = Instantiate(Ground) as GameObject;
@@ -184,54 +176,43 @@ public class Level : MonoBehaviour
 					{
 						lInstanceElement = Instantiate(GF) as GameObject;
 					}
-				
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
 					break;
 				}
 				
 				
 				case LevelElementType.spi :  
 				{
-					GameObject lInstanceElement = Instantiate(spi) as GameObject;
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+					lInstanceElement = Instantiate(spi) as GameObject;
 					break;
 				}
 				
 				case LevelElementType.mid : 
 				{
-					GameObject lInstanceElement = Instantiate(mid) as GameObject;
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+					lInstanceElement = Instantiate(mid) as GameObject;
 					break;
 				}
 				
 				case LevelElementType.low :  
 				{
-					GameObject lInstanceElement = Instantiate(low) as GameObject;
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+					lInstanceElement = Instantiate(low) as GameObject;
 					break;
 				}
 				
 				case LevelElementType.vc :  
 				{
-					GameObject lInstanceElement = Instantiate(vc) as GameObject;
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+					lInstanceElement = Instantiate(vc) as GameObject;
 					break;
 				}
 				
 				case LevelElementType.hc :
 				{
-					GameObject lInstanceElement = Instantiate(hc) as GameObject;
-					lInstanceElement.transform.parent = this.transform;
-					lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+					lInstanceElement = Instantiate(hc) as GameObject;
 					break;
 				}
-				
 			}
+			lInstanceElement.transform.parent = this.transform;
+			lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
+			mLevelElementCreated.Add(lLevelElement, lInstanceElement);
 		}
 	}
 	

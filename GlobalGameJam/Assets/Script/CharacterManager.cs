@@ -22,7 +22,9 @@ public class CharacterManager : MonoBehaviour
 	bool mIsAttacking = false;
 	bool mAscollade = false;
 
-
+	
+	
+	public int mYPosition = 0;
 	
 	
 	public List<GameObject> mInstanciateSound = new List<GameObject>();
@@ -89,7 +91,7 @@ public class CharacterManager : MonoBehaviour
 	}
 	
 	
-	public void HandleAttack()
+	public void HandleAttack(int _Position)
     {
 		if(!mIsDead)
 		{
@@ -98,10 +100,30 @@ public class CharacterManager : MonoBehaviour
 			mAnimation["Attack"].layer = 2;
 			mAnimation.Play("Attack");
 			mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
+			
+			StartCoroutine(PerformAttack(_Position));
 		}
 	}
 	
-
+	
+	IEnumerator PerformAttack(int _Position)
+	{
+		yield return new WaitForSeconds(0.5f);
+		foreach(LevelElement lLevelElement in mLevel.mLevelElementCreated.Keys)
+		{
+			if( (lLevelElement.mX == _Position -1) ||  (lLevelElement.mX == _Position) || (lLevelElement.mX == _Position +1) )
+			{
+				if( (lLevelElement.mY == mYPosition -1) ||  (lLevelElement.mY == mYPosition) || (lLevelElement.mY == mYPosition +1) )
+				{
+					if(mLevel.mLevelElementCreated[lLevelElement].GetComponent<Animation>() != null)
+					{
+						mLevel.mLevelElementCreated[lLevelElement].GetComponent<Animation>().Play();
+					}
+				}
+			}
+		}
+	}
+	
 	
 	public void HandleShield()
     {
@@ -184,13 +206,14 @@ public class CharacterManager : MonoBehaviour
 				mAnimation.Stop("Jump");
 				mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,lTime);
 				mAnimation.Play("Run");
-				
+				mYPosition++;
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
 			
 			if(( other.gameObject.name == "GL(Clone)" || other.gameObject.name == "Ground_L(Clone)" ||  other.gameObject.name == "Ground_Hole(Clone)" || other.gameObject.name == "GD(Clone)") && !mIsJumping)
 			{
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y+1.2f, 0);
+				mYPosition--;
 			}
 			else if(( other.gameObject.name == "GL(Clone)" || other.gameObject.name == "Ground_L(Clone)" ||  other.gameObject.name == "Ground_Hole(Clone)" || other.gameObject.name == "GD(Clone)") && mIsJumping)
 			{
@@ -199,6 +222,7 @@ public class CharacterManager : MonoBehaviour
 				mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,lTime);
 				mAnimation.Play("Run");
 				
+				mYPosition++;
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x,  other.gameObject.transform.localPosition.y +3.2f, 0);
 			}
 		}

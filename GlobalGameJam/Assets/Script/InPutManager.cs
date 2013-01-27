@@ -70,19 +70,19 @@ public class InPutManager : MonoBehaviour
 	        {
 				mInPutState = InPutState.Down;
 			}	
-			Play();
+			Play(0);
 		}
 	}
 	
 	
-	public void Play()
+	public void Play(int _Position)
 	{
 		if(mTrackType == TrackType.Action)
 		{
 			switch (mInPutState)
 			{
 				case InPutState.Down : mCharactereManager.HandleShield(); break;
-				case InPutState.Up : mCharactereManager.HandleAttack(); break;
+				case InPutState.Up : mCharactereManager.HandleAttack(_Position); break;
 				case InPutState.Middle : mCharactereManager.HandleIdleAction();break;
 			}
 		}
