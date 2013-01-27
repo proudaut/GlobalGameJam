@@ -51,6 +51,7 @@ public class Level : MonoBehaviour
 	
 	void OnButtonClick(Button _button)
 	{
+		Debug.Log("CLICK");
 		if(mIsPlaying == false)
 		{
 			Play();
@@ -60,6 +61,7 @@ public class Level : MonoBehaviour
 			Stop();
 		}
 	}
+	
 	
 	public void Play()
 	{
