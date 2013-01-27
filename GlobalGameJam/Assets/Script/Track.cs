@@ -54,6 +54,8 @@ public class Track : MonoBehaviour
 			float lD = mLevel.mDuration ;
 			float lD1 = mDuration;
 			
+			
+			
 			int count = (int)Mathf.Ceil(lD/lD1);
 			for(int i=0; i<mDuration; i++)
 			{
@@ -106,7 +108,7 @@ public class Track : MonoBehaviour
 					lCountDown++;
 				}
 			}
-			if( lCountDown < mMinMax )
+			if( lCountDown < mTopMax  )
 			{
 				return true;
 			}
@@ -115,6 +117,7 @@ public class Track : MonoBehaviour
 				return false;
 			}
 		}
+		
 		else if(_InPutState == InPutState.Up)
 		{
 			int lCountUp = 0;
@@ -125,7 +128,7 @@ public class Track : MonoBehaviour
 					lCountUp++;
 				}
 			}
-			if( lCountUp < mTopMax )
+			if( lCountUp <  mMinMax)
 			{
 				return true;
 			}
