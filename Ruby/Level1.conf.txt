@@ -3,4 +3,5 @@
 "Jump_max":1,
 "Slide_max":1,
 "Strike_max":0,
-"Prot_max":0]
+"Prot_max":0,
+"Level_size":12]

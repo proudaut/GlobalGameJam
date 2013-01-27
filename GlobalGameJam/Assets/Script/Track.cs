@@ -16,9 +16,9 @@ public class Track : MonoBehaviour
 	public CharacterManager mCharactereManager;
 	public GameObject mInputPrefab;
 	public TrackType mTrackType;
-
+	public Dictionary<int,InPutManager> mInputList = new Dictionary<int, InPutManager>();
 	
-	private Dictionary<int,InPutManager> mInputList = new Dictionary<int, InPutManager>();
+	
 	private bool mIsPlaying = false;
 	private float mStartTime =0;
 	private int mIndexAnimation = 0;
@@ -65,6 +65,9 @@ public class Track : MonoBehaviour
 	}
 	
 	
+
+	
+	
 	public void Play()
 	{
 		mIsPlaying = true;
@@ -72,31 +75,16 @@ public class Track : MonoBehaviour
 		mIndexAnimation = 0;
 	}
 	
-	
-	
 	public void Stop()
 	{
 		mIsPlaying = false;
-
 	}
 	
 	void Update () 
 	{
 		if (mIsPlaying)
 		{
-			if(Time.time - mStartTime>0.99999)
-			{
-				mStartTime = Time.time;
-				if(mInputList.Count>mIndexAnimation)
-				{
-					mInputList[mIndexAnimation].Play(mIndexAnimation);
-					mIndexAnimation++;
-				}
-				else
-				{
-					mLevel.Stop();
-				}
-			}
 		}
 	}
+
 }

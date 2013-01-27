@@ -70,7 +70,7 @@ public class InPutManager : MonoBehaviour
 	        {
 				mInPutState = InPutState.Down;
 			}	
-			Play(0);
+			///Play(0);
 		}
 	}
 	
@@ -81,18 +81,18 @@ public class InPutManager : MonoBehaviour
 		{
 			switch (mInPutState)
 			{
-				case InPutState.Down : mCharactereManager.HandleShield(); break;
+				case InPutState.Down : mCharactereManager.HandleShield(_Position); break;
 				case InPutState.Up : mCharactereManager.HandleAttack(_Position); break;
-				case InPutState.Middle : mCharactereManager.HandleIdleAction();break;
+				case InPutState.Middle : mCharactereManager.HandleIdleAction(_Position);break;
 			}
 		}
 		else
 		{
 			switch (mInPutState)
 			{
-				case InPutState.Down : mCharactereManager.HandleSlide(); break;
-				case InPutState.Up : mCharactereManager.HandleJump();  break;
-				case InPutState.Middle : mCharactereManager.HandleIdleMovement();break;
+				case InPutState.Down : mCharactereManager.HandleSlide(_Position); break;
+				case InPutState.Up : mCharactereManager.HandleJump(_Position);  break;
+				case InPutState.Middle : mCharactereManager.HandleIdleMovement(_Position);break;
 			}
 		}
 	}

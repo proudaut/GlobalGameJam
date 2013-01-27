@@ -1,0 +1,7 @@
+["Move_size":4,
+"Action_size":3,
+"Jump_max":3,
+"Slide_max":3,
+"Strike_max":1,
+"Prot_max":1,
+"Level_size":12]
