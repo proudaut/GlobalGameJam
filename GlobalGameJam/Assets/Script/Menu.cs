@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Menu : MonoBehaviour {
-
+public class Menu : MonoBehaviour
+{
+	public AudioSource mSound;
 	// Use this for initialization
 	void Start () {
 	
@@ -16,6 +17,14 @@ public class Menu : MonoBehaviour {
 	
 	void OnButtonClick(Button _button)
 	{
+		mSound.Play();
+		StartCoroutine(Next());
+	}
+	
+	
+	IEnumerator Next()
+	{
+		yield return new WaitForSeconds(1);
 		Application.LoadLevel("Tutorial");
 	}
 }
