@@ -5,8 +5,9 @@ public class Menu : MonoBehaviour
 {
 	public AudioSource mSound;
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+	{
+		MusicManager.PlayMusique(MusicID.Menu);
 	}
 	
 	// Update is called once per frame

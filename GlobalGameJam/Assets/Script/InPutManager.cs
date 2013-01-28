@@ -81,29 +81,29 @@ public class InPutManager : MonoBehaviour
 					mInPutState = InPutState.Down;
 				}
 			}	
-			//Play(1);
+			Play(0,false);
 		}
 	}
 	
 	
-	public void Play(int _Position)
+	public void Play(int _Position, bool _inGame = true)
 	{
 		if(mTrackType == TrackType.Action)
 		{
 			switch (mInPutState)
 			{
-				case InPutState.Up : mCharactereManager.HandleShield(_Position); break;
-				case InPutState.Down  : mCharactereManager.HandleAttack(_Position); break;
-				case InPutState.Middle : mCharactereManager.HandleIdleAction(_Position);break;
+				case InPutState.Up : mCharactereManager.HandleShield(_Position,_inGame); break;
+				case InPutState.Down  : mCharactereManager.HandleAttack(_Position,_inGame); break;
+				case InPutState.Middle : mCharactereManager.HandleIdleAction(_Position,_inGame);break;
 			}
 		}
 		else
 		{
 			switch (mInPutState)
 			{
-				case InPutState.Down : mCharactereManager.HandleSlide(_Position); break;
-				case InPutState.Up : mCharactereManager.HandleJump(_Position);  break;
-				case InPutState.Middle : mCharactereManager.HandleIdleMovement(_Position);break;
+				case InPutState.Down : mCharactereManager.HandleSlide(_Position,_inGame); break;
+				case InPutState.Up : mCharactereManager.HandleJump(_Position,_inGame);  break;
+				case InPutState.Middle : mCharactereManager.HandleIdleMovement(_Position,_inGame);break;
 			}
 		}
 	}

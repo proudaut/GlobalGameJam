@@ -49,7 +49,7 @@ public class CharacterManager : MonoBehaviour
 		mExplosion.Stop();
 	}
 	
-	public void HandleJump(int _Position)
+	public void HandleJump(int _Position, bool _InGame = true)
     {
 		Debug.Log("HandleJump");
 		CleanSound();
@@ -62,10 +62,13 @@ public class CharacterManager : MonoBehaviour
 		mInstanciateSound.Add(Instantiate(mJumpSound) as GameObject);
 		
 		fall = false;
+		
+		
+		if(_InGame)
 		StartCoroutine(ManageMove(_Position));
 	}
 	
-	public void HandleSlide(int _Position)
+	public void HandleSlide(int _Position, bool _InGame = true)
     {
 		if(!mIsDead)
 		{
@@ -79,11 +82,12 @@ public class CharacterManager : MonoBehaviour
 			mInstanciateSound.Add(Instantiate(mSlideSound) as GameObject);
 			
 			fall = false;
+			if(_InGame)
 			StartCoroutine(ManageMove(_Position));
 		}
 	}
 	
-	public void HandleIdleMovement(int _Position)
+	public void HandleIdleMovement(int _Position, bool _InGame = true)
     {
 		if(!mIsDead)
 		{
@@ -99,25 +103,26 @@ public class CharacterManager : MonoBehaviour
 			mInstanciateSound.Add(Instantiate(mIdleMovementSound) as GameObject);
 			
 			fall = false;
+			if(_InGame)
 			StartCoroutine(ManageMove(_Position));
 		}
 	}
 
 	
-	public void HandleIdleAction(int _Position)
+	public void HandleIdleAction(int _Position, bool _InGame = true)
     {
 		if(!mIsDead)
 		{
 			mActionType = ActionType.Nothing;
 			
 			CleanSound();
-
+			
 			if(mIdleActionSound!= null)
 			mInstanciateSound.Add(Instantiate(mIdleActionSound) as GameObject);
 		}
 	}
 	
-	public void HandleAttack(int _Position)
+	public void HandleAttack(int _Position, bool _InGame = true)
     {
 		if(!mIsDead)
 		{
@@ -129,12 +134,13 @@ public class CharacterManager : MonoBehaviour
 			mAnimation.Play("Attack");
 			mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
 			
+			if(_InGame)
 			StartCoroutine(PerformAttack(_Position));
 		}
 	}
 	
 	
-	public void HandleShield(int _Position)
+	public void HandleShield(int _Position, bool _InGame = true)
     {
 		if(!mIsDead)
 		{
@@ -319,18 +325,13 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(lComplexElementLevel.G || lComplexElementLevel.hc)  
+			if(lComplexElementLevel.G)  
 			{
 				mMoveType = MoveType.Nothing;
 				CheckWalk(lComplexElementLevel,lComplexElementLevelDown,_Position);
 				yield break;
 			}
 			
-			/*if ((lComplexElementLevel.G) && (lComplexElementLevel.spi) || (lComplexElementLevel.mid && !fall ) )
-			{
-				StartCoroutine(Die());
-				yield break;
-			}*/
 			
 			if( (lComplexElementLevel.GR ||(lComplexElementLevel.GD && !fall)) )
 			{
@@ -348,11 +349,6 @@ public class CharacterManager : MonoBehaviour
 		}
 		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Jump)  // Shield Jump
 		{
-			/*if ((lComplexElementLevel.G || lComplexElementLevel.hc) && (lComplexElementLevel.mid && !fall ) )
-			{
-				StartCoroutine(Die());
-				yield break;
-			}*/
 			
 			if(lComplexElementLevel.GF &&  !fall)
 			{	
@@ -450,7 +446,7 @@ public class CharacterManager : MonoBehaviour
 				return;
 			}
 			
-			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
+			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall)  ||lComplexElementLevelDown.vid) && ! lComplexElementLevelDown.hc)
 			{
 				Debug.Log ("walk FALL");
 				MoveDown(_Position);
@@ -568,6 +564,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			mAnimation.Stop("Jump");
 			mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
+			mAnimation.Play("Run");
 			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, 0);
 		}
 	}

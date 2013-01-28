@@ -16,7 +16,7 @@ public class ComplexElementLevel
 	public bool low= false;
 	public bool vc= false;
 	public bool hc= false;
-	
+	public bool vid= false;
 	
 	public ComplexElementLevel(List<LevelElement> _LevelElements)
 	{
@@ -36,5 +36,14 @@ public class ComplexElementLevel
 				case LevelElementType.hc : hc = true; break;
 			}
 		}
+		
+
+		
+		if( !G && !GR && !GL && !GD && !GF && !spi && mid && !low && !vc && !hc)
+		{
+			vid = true;
+		}
+		
+		
 	}
 }

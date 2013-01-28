@@ -20,9 +20,7 @@ public class Level : MonoBehaviour
 	public Dictionary<LevelElement, GameObject> mLevelElementCreated = new Dictionary<LevelElement, GameObject>();
 	
 	
-	public AudioSource mSound;
-	
-	public static int mCurrentScene = 0;
+	public static int mCurrentScene = -1;
 	public List<TextAsset> mLevelDescriptors = new List<TextAsset>();
 	public List<TextAsset> mLevelConfigs = new List<TextAsset>();
 	
@@ -72,6 +70,8 @@ public class Level : MonoBehaviour
 	
 	IEnumerator ReadyStart()
 	{
+		MusicManager.PlayMusique(MusicID.Level2);
+		
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharactereManager.mYPosition = 1;
@@ -83,25 +83,46 @@ public class Level : MonoBehaviour
 		
 		mCharactereManager.mIsDead = false;
 		mIsPlaying = true;
-		mSound.Play();
-		
+
 
 		mStartTime = Time.time -2;
 		mIndexAnimation = 0;
 		
-
+		
 	}
 	
 	
 	public void Stop()
 	{
-		Application.LoadLevel("LevelScene");
+		//Application.LoadLevel("LevelScene");
+		
+		mIsPlaying = false;
+		MusicManager.PlayMusique(MusicID.Menu);
+		mCharactereManager.mAnimation.Stop();
+		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
+		mCharactereManager.mYPosition = 1;
+		mCharater.transform.localPosition = new Vector3(0,3,0);
+		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
+		
 	}
 	
 	
 	// Use this for initialization
 	void Start () 
 	{
+		if(mCurrentScene == -1)
+		{
+			if(PlayerPrefs.HasKey("Level1"))
+			{
+				mCurrentScene = PlayerPrefs.GetInt("Level1");
+			}
+			else
+			{
+				mCurrentScene = 0;
+			}
+		}
+
+		MusicManager.PlayMusique(MusicID.Menu);
 		LoadLevel();
 		LoadConfig();
 		GenerateLevel();
@@ -269,7 +290,15 @@ public class Level : MonoBehaviour
 					{
 						mActionTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
 					}
-					mMoveTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
+					
+					if(mMoveTrack.mInputList.ContainsKey(mIndexAnimation))
+					{
+						mMoveTrack.mInputList[mIndexAnimation].Play(mIndexAnimation);
+					}
+					else
+					{
+						mActionTrack.mCharactereManager.HandleIdleMovement(mIndexAnimation);
+					}
 
 					mIndexAnimation++;
 				}
@@ -285,6 +314,7 @@ public class Level : MonoBehaviour
 	void LoadNextScene()
 	{
 		mCurrentScene++;
+		PlayerPrefs.SetInt("Level1",mCurrentScene);
 		Application.LoadLevel("LevelScene");
 	}
 
