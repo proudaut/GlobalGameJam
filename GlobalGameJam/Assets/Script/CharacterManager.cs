@@ -560,7 +560,7 @@ public class CharacterManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if(mAnimation["Jump"].time > 0.5 &&  mAnimation.IsPlaying("Jump"))
+		if(mAnimation["Jump"].time > 0.5 &&  mAnimation.IsPlaying("Jump") && mNewRealY != this.transform.localPosition.y)
 		{
 			mAnimation.Stop("Jump");
 			mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
