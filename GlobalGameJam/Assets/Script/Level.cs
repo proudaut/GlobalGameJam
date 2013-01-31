@@ -139,8 +139,8 @@ public class Level : MonoBehaviour
 		mMoveTrack.mTopMax = int.Parse(lElementList["Jump_max"].ToString());
 		mMoveTrack.mMinMax = int.Parse(lElementList["Slide_max"].ToString());
 		
-		mActionTrack.mTopMax = int.Parse(lElementList["Strike_max"].ToString());
-		mActionTrack.mMinMax = int.Parse(lElementList["Prot_max"].ToString());
+		mActionTrack.mTopMax =int.Parse(lElementList["Strike_max"].ToString()); 
+		mActionTrack.mMinMax = int.Parse(lElementList["Prot_max"].ToString()); 
 		
 		
 		mMoveTrack.Configure();

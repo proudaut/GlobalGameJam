@@ -39,7 +39,7 @@ public class ComplexElementLevel
 		
 
 		
-		if( !G && !GR && !GL && !GD && !GF && !spi && mid && !low && !vc && !hc)
+		if( !G && !GR && !GD && !GF)
 		{
 			vid = true;
 		}
