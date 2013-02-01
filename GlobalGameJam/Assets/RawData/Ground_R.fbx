@@ -10,10 +10,10 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2013
 		Month: 01
-		Day: 26
-		Hour: 18
-		Minute: 49
-		Second: 30
+		Day: 31
+		Hour: 21
+		Minute: 26
+		Second: 44
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,8 +21,8 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-01-26 18:49:30:000"
-Creator: "Blender version 2.63 (sub 0)"
+CreationTime: "2013-01-31 21:26:44:000"
+Creator: "Blender version 2.65 (sub 0)"
 
 ; Object definitions
 ;------------------------------------------------------------------
@@ -57,12 +57,12 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Model: "Model::Ground_R", "Mesh" {
+	Model: "Model::Ground_Hole", "Mesh" {
 		Version: 232
 		Properties60:  {
 			Property: "QuaternionInterpolate", "bool", "",0
 			Property: "Visibility", "Visibility", "A+",1
-			Property: "Lcl Translation", "Lcl Translation", "A+",0.000000000000000,0.000000000000000,0.000000000000000
+			Property: "Lcl Translation", "Lcl Translation", "A+",0.000000000000000,-2.000000000000000,0.000000000000000
 			Property: "Lcl Rotation", "Lcl Rotation", "A+",-90.000009334538021,0.000000000000000,0.000000000000000
 			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.000000000000000,1.000000000000000,1.000000000000000
 			Property: "RotationOffset", "Vector3D", "",0,0,0
@@ -136,8 +136,8 @@ Objects:  {
 		MultiTake: 1
 		Shading: Y
 		Culling: "CullingOff"
-		Vertices: 2.000000,-0.100000,1.750000,1.800000,-0.100000,1.750000,2.000000,-0.100000,2.000000,1.800000,-0.100000,2.000000,2.000000,0.100000,2.000000,1.800000,0.100000,2.000000,2.000000,0.100000,2.250000
-		,1.800000,0.100000,2.250000,2.000000,-0.100000,0.000000,1.800000,-0.100000,0.000000
+		Vertices: 2.000000,-0.100000,3.750000,1.000000,-0.100000,3.750000,2.000000,-0.100000,4.000000,1.000000,-0.100000,4.000000,2.000000,0.100000,4.000000,1.000000,0.100000,4.000000,2.000000,0.100000,4.250000
+		,1.000000,0.100000,4.250000,2.000000,-0.100000,2.000000,1.000000,-0.100000,2.000000
 		PolygonVertexIndex: 1,0,2,-4,6,7,5,-5,0,1,9,-9
 		Edges: 
 		GeometryVersion: 124
@@ -150,7 +150,7 @@ Objects:  {
 			 ,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000
 			 ,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000
 			 ,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000
-			 ,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000
+			 ,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-0.999969482421875,0.000000000000000
 		}
 		LayerElementSmoothing: 0 {
 			Version: 102
@@ -164,8 +164,8 @@ Objects:  {
 			Name: "UVMap"
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
-			UV: 0.000000,0.835938,1.000000,0.835938,1.000000,0.937500,0.000000,0.937500,1.000000,1.000000,0.000000,1.000000,0.000000,0.937500
-			 ,1.000000,0.937500,1.000000,0.835938,0.000000,0.835938,0.000000,0.835938,1.000000,0.835938
+			UV: 0.000000,0.835938,0.500000,0.835938,0.500000,0.937500,0.000000,0.937500,0.500000,1.000000,0.000000,1.000000,0.000000,0.937500
+			 ,0.500000,0.937500,0.500000,0.835938,0.000000,0.835938,0.000000,0.835938,0.500000,0.835938
 			UVIndex: 0,1,2,3,4,5,6,7,8,9,10,11
 		}
 		LayerElementTexture: 0 {
@@ -208,7 +208,7 @@ Objects:  {
 			}
 		}
 	}
-	Material: "Material::ground__block_png", "" {
+	Material: "Material::ground__ground_png", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -230,14 +230,14 @@ Objects:  {
 			Property: "Opacity", "double", "",1.0
 		}
 	}
-	Video: "Video::block_png", "Clip" {
+	Video: "Video::ground_png", "Clip" {
 		Type: "Clip"
 		Properties60:  {
 			Property: "FrameRate", "double", "",0
 			Property: "LastFrame", "int", "",0
 			Property: "Width", "int", "",0
 			Property: "Height", "int", "",0
-			Property: "Path", "charptr", "", "block.png"
+			Property: "Path", "charptr", "", "ground.png"
 			Property: "StartFrame", "int", "",0
 			Property: "StopFrame", "int", "",0
 			Property: "PlaySpeed", "double", "",1
@@ -248,13 +248,13 @@ Objects:  {
 			Property: "AccessMode", "enum", "",0
 		}
 		UseMipMap: 0
-		Filename: "block.png"
-		RelativeFilename: "C:\Users\Jon\Desktop\GlobalGameJam2013\Sources\PNG\block.png"
+		Filename: "ground.png"
+		RelativeFilename: "C:\Users\Melong\Documents\Temp\Dropbox gmail\Dropbox\BeatLoop\Sources\PNG\ground.png"
 	}
-	Texture: "Texture::block_png", "TextureVideoClip" {
+	Texture: "Texture::ground_png", "TextureVideoClip" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::block_png"
+		TextureName: "Texture::ground_png"
 		Properties60:  {
 			Property: "Translation", "Vector", "A+",0,0,0
 			Property: "Rotation", "Vector", "A+",0,0,0
@@ -272,9 +272,9 @@ Objects:  {
 			Property: "TextureScalingPivot", "Vector3D", "",0,0,0
 			Property: "VideoProperty", "object", ""
 		}
-		Media: "Video::block_png"
-		FileName: "block.png"
-		RelativeFilename: "C:\Users\Jon\Desktop\GlobalGameJam2013\Sources\PNG\block.png"
+		Media: "Video::ground_png"
+		FileName: "ground.png"
+		RelativeFilename: "C:\Users\Melong\Documents\Temp\Dropbox gmail\Dropbox\BeatLoop\Sources\PNG\ground.png"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
 		Texture_Alpha_Source: "None"
@@ -287,8 +287,8 @@ Objects:  {
 		}
 		NbPoseNodes: 1
 		PoseNode:  {
-			Node: "Model::Ground_R"
-			Matrix: 1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
+			Node: "Model::Ground_Hole"
+			Matrix: 0.000000075497901,0.000000000000000,-1.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,-0.000000075497901,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,-2.000000000000000,0.000000000000000,1.000000000000000
 		}
 	}
 	GlobalSettings:  {
@@ -309,7 +309,7 @@ Objects:  {
 ;------------------------------------------------------------------
 
 Relations:  {
-	Model: "Model::Ground_R", "Mesh" {
+	Model: "Model::Ground_Hole", "Mesh" {
 	}
 	Model: "Model::Producer Perspective", "Camera" {
 	}
@@ -327,11 +327,11 @@ Relations:  {
 	}
 	Model: "Model::Camera Switcher", "CameraSwitcher" {
 	}
-	Material: "Material::ground__block_png", "" {
+	Material: "Material::ground__ground_png", "" {
 	}
-	Texture: "Texture::block_png", "TextureVideoClip" {
+	Texture: "Texture::ground_png", "TextureVideoClip" {
 	}
-	Video: "Video::block_png", "Clip" {
+	Video: "Video::ground_png", "Clip" {
 	}
 }
 
@@ -339,10 +339,10 @@ Relations:  {
 ;------------------------------------------------------------------
 
 Connections:  {
-	Connect: "OO", "Model::Ground_R", "Model::Scene"
-	Connect: "OO", "Material::ground__block_png", "Model::Ground_R"
-	Connect: "OO", "Texture::block_png", "Model::Ground_R"
-	Connect: "OO", "Video::block_png", "Texture::block_png"
+	Connect: "OO", "Model::Ground_Hole", "Model::Scene"
+	Connect: "OO", "Material::ground__ground_png", "Model::Ground_Hole"
+	Connect: "OO", "Texture::ground_png", "Model::Ground_Hole"
+	Connect: "OO", "Video::ground_png", "Texture::ground_png"
 }
 ;Takes and animation section
 ;----------------------------------------------------
