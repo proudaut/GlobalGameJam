@@ -179,6 +179,12 @@ public class CharacterManager : MonoBehaviour
 	
 	IEnumerator ManageMove(int _Position)
 	{
+		if(mYPosition<1)
+		{
+			StartCoroutine(Die());
+		}
+		
+		
 		Debug.Log("Position : " + _Position + " " + mYPosition);
 		List<LevelElement> lLevelElemenCaseCurrent = new List<LevelElement>();
 		foreach(LevelElement lLevelElement in mLevel.mLevelElements)
@@ -206,7 +212,7 @@ public class CharacterManager : MonoBehaviour
 				lLevelElemenCaseDown.Add(lLevelElement);
 			}
 		}
-		
+
 		
 		ComplexElementLevel lComplexElementLevel = new ComplexElementLevel(lLevelElemenCaseCurrent);
 		ComplexElementLevel lComplexElementLevelUp = new ComplexElementLevel(lLevelElemenCaseUp);
@@ -222,13 +228,18 @@ public class CharacterManager : MonoBehaviour
 				yield break;
 			}
 			
-			if(( lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
+			if( (lComplexElementLevelDown.GL ||  (lComplexElementLevelDown.GD && !fall) ) && ! lComplexElementLevelDown.hc)
 			{
 				Debug.Log ("walk FALL");
 				MoveDown(_Position);
 				yield break;
 			}
-				
+			if(fall && (mYPosition>0) && !( lComplexElementLevelDown.GF  || lComplexElementLevelDown.G || lComplexElementLevelDown.GD || lComplexElementLevelDown.GR )	)
+			{
+				Debug.Log ("walk FALL");
+				MoveDown(_Position);
+				yield break;
+			}
 				
 		}
 		else if(mActionType == ActionType.Attack && mMoveType == MoveType.Nothing)  // Attack walk
@@ -246,7 +257,12 @@ public class CharacterManager : MonoBehaviour
 				MoveDown(_Position);
 				yield break;
 			}
-			
+			if(fall && (mYPosition>0) && !( lComplexElementLevelDown.GF  || lComplexElementLevelDown.G || lComplexElementLevelDown.GD || lComplexElementLevelDown.GR )	)
+			{
+				Debug.Log ("walk FALL");
+				MoveDown(_Position);
+				yield break;
+			}
 		}
 		else if(mActionType == ActionType.Shield && mMoveType == MoveType.Nothing)  // Shield walk
 		{
@@ -263,6 +279,13 @@ public class CharacterManager : MonoBehaviour
 				MoveDown(_Position);
 				yield break;
 			}
+			if(fall && (mYPosition>0) && !( lComplexElementLevelDown.GF  || lComplexElementLevelDown.G || lComplexElementLevelDown.GD || lComplexElementLevelDown.GR )	)
+			{
+				Debug.Log ("walk FALL");
+				MoveDown(_Position);
+				yield break;
+			}
+			
 		}
 
 	
@@ -324,6 +347,16 @@ public class CharacterManager : MonoBehaviour
 				StartCoroutine(Die());
 				yield break;
 			}
+			
+			if( (!(lComplexElementLevel.G)) && lComplexElementLevelUp.spi)
+			{
+				Debug.Log("2");
+				StartCoroutine(Die());
+				yield break;
+			}
+		
+			
+			
 			
 			if(lComplexElementLevel.G)  
 			{
