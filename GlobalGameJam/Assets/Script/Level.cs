@@ -14,7 +14,8 @@ public class Level : MonoBehaviour
 	public Track mActionTrack;
 	public Track mMoveTrack;
 	
-	
+	public Button mButtonMenu;
+	public Button mButtonPlay;
 	
 	public List<LevelElement> mLevelElements =  new List<LevelElement>();
 	public Dictionary<LevelElement, GameObject> mLevelElementCreated = new Dictionary<LevelElement, GameObject>();
@@ -51,16 +52,33 @@ public class Level : MonoBehaviour
 	
 	void OnButtonClick(Button _button)
 	{
-		Debug.Log("CLICK");
-		if(mIsPlaying == false)
+		
+		if(_button == mButtonPlay)
 		{
-			Play();
+			if(mIsPlaying == false)
+			{
+				Play();
+			}
+			else
+			{
+				Stop();
+			}
 		}
-		else
+		else if(_button == mButtonMenu)
 		{
-			Stop();
+			BackHome();
 		}
+
 	}
+	
+	
+	void BackHome()
+	{
+		mCurrentScene = 0; 
+		PlayerPrefs.SetInt("Level1",0);
+		Application.LoadLevel("TitleScreen");
+	}
+	
 	
 	
 	public void Play()
@@ -139,8 +157,8 @@ public class Level : MonoBehaviour
 		mMoveTrack.mTopMax = int.Parse(lElementList["Jump_max"].ToString());
 		mMoveTrack.mMinMax = int.Parse(lElementList["Slide_max"].ToString());
 		
-		mActionTrack.mTopMax =int.Parse(lElementList["Strike_max"].ToString()); 
-		mActionTrack.mMinMax = int.Parse(lElementList["Prot_max"].ToString()); 
+		mActionTrack.mTopMax =int.Parse(lElementList["Prot_max"].ToString()); 
+		mActionTrack.mMinMax = int.Parse(lElementList["Strike_max"].ToString()); 
 		
 		
 		mMoveTrack.Configure();

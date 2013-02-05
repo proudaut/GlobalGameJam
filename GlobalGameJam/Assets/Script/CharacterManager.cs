@@ -135,7 +135,7 @@ public class CharacterManager : MonoBehaviour
 			mInstanciateSound.Add(Instantiate(mAttackSound) as GameObject);
 			
 			if(_InGame)
-			StartCoroutine(PerformAttack(_Position));
+			StartCoroutine(PerformAttack(_Position, mYPosition));
 		}
 	}
 	
@@ -156,20 +156,22 @@ public class CharacterManager : MonoBehaviour
 	
 	
 	
-	IEnumerator PerformAttack(int _Position)
+	IEnumerator PerformAttack(int _PositionX, int _PositionY)
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.2f);
 		foreach(LevelElement lLevelElement in mLevel.mLevelElementCreated.Keys)
 		{
-			if(  (lLevelElement.mX == _Position))
+			if(  (lLevelElement.mX == _PositionX))
 			{
-				if( (lLevelElement.mY == mYPosition -1) ||  (lLevelElement.mY == mYPosition) )
+				if( (lLevelElement.mY == _PositionY -1) ||  (lLevelElement.mY == _PositionY) )
 				{
 					if(mLevel.mLevelElementCreated[lLevelElement] != null)
 					{
 						if(mLevel.mLevelElementCreated[lLevelElement].GetComponent<Animation>() != null)
 						{
-							mLevel.mLevelElementCreated[lLevelElement].GetComponent<Animation>().Play();
+							mLevel.mLevelElementCreated[lLevelElement].GetComponent<Animation>().Play("break");
+							yield return new WaitForSeconds(2);
+							mLevel.mLevelElementCreated[lLevelElement].GetComponent<Animation>().Play("Display");
 						}
 					}
 				}
@@ -559,20 +561,16 @@ public class CharacterManager : MonoBehaviour
 	void MoveUp()
 	{
 		mYPosition++;
-		mNewRealY = this.transform.localPosition.y + 2.0f;
+		mNewRealY = mNewRealY + 2.0f;
 		//this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + 2.0f, 0);
 	}
 	
 	void MoveDown(int _Position)
 	{
 		fall = true;
-		
-		Debug.Log("MoveDown()" + mYPosition );
-		mYPosition--;
-		
 
-		this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - 2.0f, 0);
-		mNewRealY = this.transform.localPosition.y;
+		mYPosition--;
+		mNewRealY = mNewRealY - 2.0f;
 			
 			
 		if(mActionType == ActionType.Attack)
@@ -599,6 +597,14 @@ public class CharacterManager : MonoBehaviour
 			mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
 			mAnimation.Play("Run");
 			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, 0);
+		}
+		
+		Debug.Log(this.transform.localPosition.y  +  "  to  " +mNewRealY);
+		if(this.transform.localPosition.y > mNewRealY)
+		{
+			
+			this.transform.Translate(Vector3.down * Time.deltaTime *2);
+			mNewRealY =  this.transform.localPosition.y;
 		}
 	}
 }

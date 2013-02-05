@@ -7,7 +7,6 @@ public class Menu : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		//PlayerPrefs.SetInt("Level1",0);
 		MusicManager.PlayMusique(MusicID.Menu);
 	}
 	
