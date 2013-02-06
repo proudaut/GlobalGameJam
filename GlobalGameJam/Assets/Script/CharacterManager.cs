@@ -95,7 +95,7 @@ public class CharacterManager : MonoBehaviour
 
 			
 			mMoveType = MoveType.Nothing;
-			
+			mAnimation.Stop("Run");
 			mAnimation["Run"].layer = 1;
 			mAnimation.Play("Run");
 			
@@ -472,6 +472,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		mAnimation.Stop("Jump");
 		mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
+		mAnimation.Play("Run");
 		if(mActionType == ActionType.Nothing && mMoveType == MoveType.Nothing)  // walk
 		{
 			if( (lComplexElementLevel.spi) || (lComplexElementLevel.vc && !fall) || (lComplexElementLevel.mid && !fall ) || (lComplexElementLevel.GF) )
@@ -576,7 +577,7 @@ public class CharacterManager : MonoBehaviour
 		if(mActionType == ActionType.Attack)
 			mActionType = ActionType.Nothing;
 
-		
+		this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX |  RigidbodyConstraints.FreezePositionZ;
 		
 		StartCoroutine(ManageMove(_Position));
 	}
@@ -599,12 +600,20 @@ public class CharacterManager : MonoBehaviour
 			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, 0);
 		}
 		
-		Debug.Log(this.transform.localPosition.y  +  "  to  " +mNewRealY);
-		if(this.transform.localPosition.y > mNewRealY)
+		//Debug.Log(this.transform.localPosition.y  +  "  to  " +mNewRealY);
+		/*if(this.transform.localPosition.y > mNewRealY)
 		{
 			
-			this.transform.Translate(Vector3.down * Time.deltaTime *2);
-			mNewRealY =  this.transform.localPosition.y;
+			this.transform.Translate(Vector3.down * Time.deltaTime *10);
+			//mNewRealY =  this.transform.localPosition.y;
+		}*/
+		
+		
+		if( !mAnimation.IsPlaying("Jump") && this.transform.localPosition.y < mNewRealY)
+		{
+			Debug.Log("Rigidbody change");
+			this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, 0);
 		}
 	}
 }
