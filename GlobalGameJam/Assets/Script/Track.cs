@@ -11,33 +11,24 @@ public enum TrackType
 
 public class Track : MonoBehaviour 
 {
-
 	public Level mLevel;
 	public CharacterManager mCharactereManager;
+
 	public GameObject mInputPrefab;
-	
 	public TrackType mTrackType;
 	public Dictionary<int,InPutManager> mInputList = new Dictionary<int, InPutManager>();
 	public List<GameObject> mInputInstanciate = new List<GameObject>();
-	
-	
-	
 	
 	public MovieClipBehaviour mTrackBackGround;
 	public UILabel mTopLabelMax;
 	public UILabel mMinLabelMax;
 	public AudioSource mSourceNot;
 	
+	public int mDuration;
 	public int mTopMax;
 	public int mMinMax;
-	public int mDuration;
-	
-
-
-	void Start () 
-	{
-	}
-	
+	public string mTopSound;
+	public string mMinSound;	
 	
 
 	public void Configure()
@@ -48,9 +39,6 @@ public class Track : MonoBehaviour
 		}
 		mInputInstanciate.Clear();
 		mInputList.Clear();
-		
-		
-		
 		
 		
 		mTopLabelMax.text = mTopMax.ToString();
@@ -99,12 +87,8 @@ public class Track : MonoBehaviour
 					lInPutManagerCopy.mCharactereManager = lInPutManager.mCharactereManager;
 					lInPutManagerCopy.mTrack = this;
 					lInPutManager.AddInputManagerCopy(lInPutManagerCopy);
-					
-					
-					mInputList.Add(lInPutManagerCopy.mPosition,lInPutManagerCopy);
-					
-					
-					
+
+					mInputList.Add(lInPutManagerCopy.mPosition,lInPutManagerCopy);					
 					lInputCopy.transform.localPosition = new Vector3(lInPutManagerCopy.mPosition * 1.88f ,0,0);
 					lInputCopy.transform.localScale = new Vector3(1,1,1);
 				}
@@ -159,7 +143,4 @@ public class Track : MonoBehaviour
 			return true;
 		}
 	}
-	
-
-
 }

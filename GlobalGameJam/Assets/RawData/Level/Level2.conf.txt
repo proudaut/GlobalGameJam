@@ -1,7 +1,13 @@
 {"Move_size":4,
 "Action_size":6,
 "Jump_max":4,
+"Jump_sound": "fx1",
 "Slide_max":4,
+"Slide_sound": "fx1",
 "Strike_max":1,
+"Strike_sound": "fx1",
 "Prot_max":1,
-"Level_size":16}
+"Prot_sound": "fx1",
+"Level_size":16,
+"Level_sound":"fx1",
+"Level_name":"Level2"}

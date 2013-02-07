@@ -10,7 +10,10 @@ public class Level : MonoBehaviour
 	const int TileOffset = 2;
 	const int LevelSizeMax = 18;
 	
+	public int mCurrentScene = -1;
 	public int mDuration;
+	public string mName = "";
+	public string mSound = "";
 	public GameObject mCharater;
 	public CharacterManager mCharactereManager;
 	
@@ -24,7 +27,7 @@ public class Level : MonoBehaviour
 	public Dictionary<LevelElement, GameObject> mLevelElementCreated = new Dictionary<LevelElement, GameObject>();
 	
 	
-	public static int mCurrentScene = -1;
+
 	public List<TextAsset> mLevelDescriptors = new List<TextAsset>();
 	public List<TextAsset> mLevelConfigs = new List<TextAsset>();
 	
@@ -55,7 +58,6 @@ public class Level : MonoBehaviour
 	
 	void OnButtonClick(Button _button)
 	{
-		
 		if(_button == mButtonPlay)
 		{
 			if(mIsPlaying == false)
@@ -71,7 +73,6 @@ public class Level : MonoBehaviour
 		{
 			BackHome();
 		}
-
 	}
 	
 	
@@ -99,24 +100,17 @@ public class Level : MonoBehaviour
 		mCharater.transform.localPosition = new Vector3(0,3,mCharater.transform.localPosition.z);
 		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
 		
-		
 		yield return new WaitForSeconds(0.1f);
 		
 		mCharactereManager.mIsDead = false;
 		mIsPlaying = true;
-
-
 		mStartTime = Time.time -2;
 		mIndexAnimation = 0;
-		
-		
 	}
 	
 	
 	public void Stop()
 	{
-		//Application.LoadLevel("LevelScene");
-		
 		mIsPlaying = false;
 		MusicManager.PlayMusique(MusicID.Menu);
 		mCharactereManager.mAnimation.Stop();
@@ -124,7 +118,6 @@ public class Level : MonoBehaviour
 		mCharactereManager.mYPosition = 1;
 		mCharater.transform.localPosition = new Vector3(-4,3,mCharater.transform.localPosition.z);
 		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
-		
 	}
 	
 	
@@ -142,7 +135,6 @@ public class Level : MonoBehaviour
 				mCurrentScene = 0;
 			}
 		}
-
 		MusicManager.PlayMusique(MusicID.Menu);
 		LoadLevel();
 		LoadConfig();
@@ -153,23 +145,43 @@ public class Level : MonoBehaviour
 	{
 		IDictionary lElementList = (IDictionary)Prime31.Json.jsonDecode(mLevelConfigs[mCurrentScene].text);
 		
-		mDuration = int.Parse(lElementList["Level_size"].ToString());	
+		Physics.gravity = new Vector3(0, -40.0f, 0);
+		
+		mDuration = int.Parse(lElementList["Level_size"].ToString());
 		mActionTrack.mDuration = int.Parse(lElementList["Action_size"].ToString());
 		mMoveTrack.mDuration = int.Parse(lElementList["Move_size"].ToString());
-		
 		mMoveTrack.mTopMax = int.Parse(lElementList["Jump_max"].ToString());
 		mMoveTrack.mMinMax = int.Parse(lElementList["Slide_max"].ToString());
-		
 		mActionTrack.mTopMax =int.Parse(lElementList["Prot_max"].ToString()); 
-		mActionTrack.mMinMax = int.Parse(lElementList["Strike_max"].ToString()); 
-		
-		
+		mActionTrack.mMinMax = int.Parse(lElementList["Strike_max"].ToString());
+			
+		if(lElementList.Contains("Level_name"))
+		{
+			mName = lElementList["Level_name"].ToString();
+		}
+		if(lElementList.Contains("Level_sound"))
+		{
+			mSound = lElementList["Level_sound"].ToString();
+		}
+		if(lElementList.Contains("Jump_sound"))
+		{
+			mMoveTrack.mTopSound = lElementList["Jump_sound"].ToString();
+		}
+		if(lElementList.Contains("Slide_sound"))
+		{
+			mMoveTrack.mMinSound = lElementList["Slide_sound"].ToString();
+		}
+		if(lElementList.Contains("Prot_sound"))
+		{
+			mActionTrack.mTopSound =lElementList["Prot_sound"].ToString(); 
+		}
+		if(lElementList.Contains("Strike_sound"))
+		{
+			mActionTrack.mMinSound = lElementList["Strike_sound"].ToString(); 
+		}
+
 		mMoveTrack.Configure();
 		mActionTrack.Configure();
-		
-		
-
-
 	}
 	
 	void LoadLevel()
@@ -181,12 +193,9 @@ public class Level : MonoBehaviour
 			mLevelElements.Add(lLevelElement);
 		}
 	}
-	
-
 
 	void GenerateLevel()
 	{
-		Physics.gravity = new Vector3(0, -40.0f, 0);
 		foreach(LevelElement lLevelElement in mLevelElements)
 		{
 			GameObject lInstanceElement = null;
@@ -196,8 +205,7 @@ public class Level : MonoBehaviour
 				{
 					lInstanceElement = Instantiate(G) as GameObject;
 					break;
-				}
-				
+				}		
 				case LevelElementType.GL : 
 				{
 					if(lLevelElement.mY == 0)
@@ -209,9 +217,7 @@ public class Level : MonoBehaviour
 						lInstanceElement = Instantiate(GL) as GameObject;
 					}
 					break;
-				}
-				
-				
+				}	
 				case LevelElementType.GR :  
 				{
 					if(lLevelElement.mY == 0)
@@ -223,10 +229,7 @@ public class Level : MonoBehaviour
 						lInstanceElement = Instantiate(GR) as GameObject;
 					}
 					break;
-				}
-				
-				
-				
+				}	
 				case LevelElementType.GD :  
 				{
 					if(lLevelElement.mY == 0)
@@ -238,8 +241,7 @@ public class Level : MonoBehaviour
 						lInstanceElement = Instantiate(GD) as GameObject;
 					}
 					break;
-				}
-				
+				}	
 				case LevelElementType.GF :
 				{
 					if(lLevelElement.mY == 0)
@@ -252,32 +254,26 @@ public class Level : MonoBehaviour
 					}
 					break;
 				}
-				
-				
 				case LevelElementType.spi :  
 				{
 					lInstanceElement = Instantiate(spi) as GameObject;
 					break;
-				}
-				
+				}	
 				case LevelElementType.mid : 
 				{
 					lInstanceElement = Instantiate(mid) as GameObject;
 					break;
-				}
-				
+				}	
 				case LevelElementType.low :  
 				{
 					lInstanceElement = Instantiate(low) as GameObject;
 					break;
 				}
-				
 				case LevelElementType.vc :  
 				{
 					lInstanceElement = Instantiate(vc) as GameObject;
 					break;
 				}
-				
 				case LevelElementType.hc :
 				{
 					lInstanceElement = Instantiate(hc) as GameObject;
@@ -289,8 +285,6 @@ public class Level : MonoBehaviour
 			mLevelElementCreated.Add(lLevelElement, lInstanceElement);
 		}
 		
-		
-		
 		for(int i=mDuration; i< mDuration + (LevelSizeMax -mDuration) ; i++)
 		{
 			GameObject lInstanceElement = Instantiate(Ground) as GameObject;
@@ -298,18 +292,12 @@ public class Level : MonoBehaviour
 			lInstanceElement.transform.localPosition = new Vector3(i*TileOffset,0*TileOffset,0);
 		}
 	}
-	
-	
-	
-	
 
-	
 	
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		
 		if(!mIsPlaying)
 		{
 			if(mCharater.transform.localPosition.x < 0)
@@ -364,5 +352,4 @@ public class Level : MonoBehaviour
 		PlayerPrefs.SetInt("Level1",mCurrentScene);
 		Application.LoadLevel("LevelScene");
 	}
-
 }
