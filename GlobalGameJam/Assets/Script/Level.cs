@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 public class Level : MonoBehaviour
 {
+	const int TileOffset = 2;
+	const int LevelSizeMax = 18;
+	
 	public int mDuration;
 	public GameObject mCharater;
 	public CharacterManager mCharactereManager;
@@ -119,7 +122,7 @@ public class Level : MonoBehaviour
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharactereManager.mYPosition = 1;
-		mCharater.transform.localPosition = new Vector3(0,3,0);
+		mCharater.transform.localPosition = new Vector3(-4,3,0);
 		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
 		
 	}
@@ -179,10 +182,11 @@ public class Level : MonoBehaviour
 		}
 	}
 	
-	const int TileOffset = 2;
+
 
 	void GenerateLevel()
 	{
+		Physics.gravity = new Vector3(0, -40.0f, 0);
 		foreach(LevelElement lLevelElement in mLevelElements)
 		{
 			GameObject lInstanceElement = null;
@@ -284,6 +288,15 @@ public class Level : MonoBehaviour
 			lInstanceElement.transform.localPosition = new Vector3(lLevelElement.mX*TileOffset,lLevelElement.mY*TileOffset,0);
 			mLevelElementCreated.Add(lLevelElement, lInstanceElement);
 		}
+		
+		
+		
+		for(int i=mDuration; i< mDuration + (LevelSizeMax -mDuration) ; i++)
+		{
+			GameObject lInstanceElement = Instantiate(Ground) as GameObject;
+			lInstanceElement.transform.parent = this.transform;
+			lInstanceElement.transform.localPosition = new Vector3(i*TileOffset,0*TileOffset,0);
+		}
 	}
 	
 	
@@ -296,7 +309,21 @@ public class Level : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (mIsPlaying && !mCharactereManager.mIsDead)
+		
+		if(!mIsPlaying)
+		{
+			if(mCharater.transform.localPosition.x < 0)
+			{
+				mCharater.animation.Play("Run");
+				mCharater.transform.Translate(Vector3.right * Time.deltaTime * -2);
+			}
+			else 
+			{
+				mCharater.animation.Stop("Run");
+				mCharater.animation.gameObject.SampleAnimation(mCharater.animation["Run"].clip,0);
+			}
+		}
+		else if (mIsPlaying && !mCharactereManager.mIsDead)
 		{
 			mCharater.transform.Translate(Vector3.right * Time.deltaTime * -2);
 			if(Time.time - mStartTime>0.99999)
@@ -317,14 +344,16 @@ public class Level : MonoBehaviour
 					{
 						mActionTrack.mCharactereManager.HandleIdleMovement(mIndexAnimation);
 					}
-
-					mIndexAnimation++;
+				}
+				else if(mIndexAnimation>(mDuration+ (LevelSizeMax -mDuration -2) ))
+				{
+					LoadNextScene();
 				}
 				else
 				{
-					Stop ();
-					LoadNextScene();
+					mCharater.animation.Play("Run");
 				}
+				mIndexAnimation++;
 			}
 		}
 	}

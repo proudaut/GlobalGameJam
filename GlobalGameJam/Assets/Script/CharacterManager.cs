@@ -470,9 +470,11 @@ public class CharacterManager : MonoBehaviour
 
 	void CheckWalk(ComplexElementLevel lComplexElementLevel,ComplexElementLevel lComplexElementLevelDown, int _Position)
 	{
+		Debug.Log ("CheckWalk");
 		mAnimation.Stop("Jump");
-		mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
-		mAnimation.Play("Run");
+		mAnimation.gameObject.SampleAnimation(mAnimation["JumpFail"].clip,0);
+		mAnimation.Play("JumpFail");
+		
 		if(mActionType == ActionType.Nothing && mMoveType == MoveType.Nothing)  // walk
 		{
 			if( (lComplexElementLevel.spi) || (lComplexElementLevel.vc && !fall) || (lComplexElementLevel.mid && !fall ) || (lComplexElementLevel.GF) )
@@ -597,7 +599,7 @@ public class CharacterManager : MonoBehaviour
 			mAnimation.Stop("Jump");
 			mAnimation.gameObject.SampleAnimation(mAnimation["Run"].clip,0);
 			mAnimation.Play("Run");
-			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, 0);
+			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, this.transform.localPosition.z);
 		}
 		
 		//Debug.Log(this.transform.localPosition.y  +  "  to  " +mNewRealY);
@@ -613,7 +615,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			Debug.Log("Rigidbody change");
 			this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, 0);
+			this.transform.localPosition = new Vector3(this.transform.localPosition.x, mNewRealY, this.transform.localPosition.z);
 		}
 	}
 }

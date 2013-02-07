@@ -32,8 +32,7 @@ public class Track : MonoBehaviour
 	public int mMinMax;
 	public int mDuration;
 	
-	
-	private bool mIsPlaying = false;
+
 
 	void Start () 
 	{
