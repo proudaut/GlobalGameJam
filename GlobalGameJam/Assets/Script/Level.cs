@@ -96,7 +96,7 @@ public class Level : MonoBehaviour
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharactereManager.mYPosition = 1;
-		mCharater.transform.localPosition = new Vector3(0,3,0);
+		mCharater.transform.localPosition = new Vector3(0,3,mCharater.transform.localPosition.z);
 		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
 		
 		
@@ -122,7 +122,7 @@ public class Level : MonoBehaviour
 		mCharactereManager.mAnimation.Stop();
 		mCharactereManager.mAnimation.gameObject.SampleAnimation(mCharactereManager.mAnimation["Run"].clip,0);
 		mCharactereManager.mYPosition = 1;
-		mCharater.transform.localPosition = new Vector3(-4,3,0);
+		mCharater.transform.localPosition = new Vector3(-4,3,mCharater.transform.localPosition.z);
 		mCharactereManager.mNewRealY = mCharater.transform.localPosition.y;
 		
 	}
